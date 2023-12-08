@@ -117,6 +117,7 @@ export default {
         name: "",
         poNum: "",
         item: "",
+        part: "",
         color: "",
         colorId: "",
         count: "",
@@ -144,6 +145,7 @@ export default {
         name: "",
         poNum: "",
         item: "",
+        part: "",
         color: "",
         colorId: "",
         count: "",
@@ -173,6 +175,7 @@ export default {
         name: "",
         poNum: "",
         item: "",
+        part: "",
         color: "",
         colorId: "",
         count: "",
@@ -539,6 +542,7 @@ export default {
             this.formout.customerName = res.data.rs.customerName
             this.formout.poNum = res.data.rs.poNum
             this.formout.item = res.data.rs.item
+            this.formout.part = res.data.rs.part
             this.formout.count = res.data.rs.count
             this.formout.orderColor = res.data.rs.color
             this.formout.orderId = orderId
@@ -546,6 +550,7 @@ export default {
             this.formoutupdate.customerNameId = res.data.rs.customerName
             this.formoutupdate.poNum = res.data.rs.poNum
             this.formoutupdate.item = res.data.rs.item
+            this.formoutupdate.part = res.data.rs.part
             this.formoutupdate.count = res.data.rs.count
             this.formoutupdate.orderColorId = res.data.rs.color
 

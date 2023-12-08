@@ -1,6 +1,11 @@
 import axios from '@/request/http.js'; // 导入http中创建的axios实例
 
 const order = {
+    loadParts (params) {
+        return axios.get(`/order/parts`,{
+            params: params
+        });
+    },
     getList (params) {
         return axios.get(`/order`,{
           params: params

@@ -88,7 +88,7 @@ export default {
       if (form == 'customer') {
         body = {
           'type': form,
-          'typeName': '客户名称',
+          'typeName': '科室名称',
           'itemName': this.formCustomer.itemName
         }
       } else if (form == 'color') {

@@ -235,7 +235,7 @@ export default {
             type: `application/vnd.ms-excel`
           })
           const link = document.createElement('a')
-          const name = `月客户金额明细.xlsx`
+          const name = `月科室金额明细.xlsx`
           link.style.display = 'none'
           link.href = URL.createObjectURL(blob)
           link.setAttribute('download', name)

@@ -17,7 +17,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="客户名称" prop="customerName">
+                  <el-form-item label="科室名称" prop="customerName">
                     <el-select v-model="formout.customerName" filterable placeholder="请选择" disabled>
                       <el-option v-for="item in customerNameOptions" :key="item.id" :label="item.itemName" :value="item.id">
                       </el-option>
@@ -26,11 +26,14 @@
                   <el-form-item label="品名" prop="name">
                     <el-input v-model="formout.name" disabled></el-input>
                   </el-form-item>
-                  <el-form-item label="PO#" prop="poNum">
+                  <el-form-item label="订单号" prop="poNum">
                     <el-input v-model="formout.poNum" disabled></el-input>
                   </el-form-item>
-                  <el-form-item label="ITEM" prop="item">
+                  <el-form-item label="品名" prop="item">
                     <el-input v-model="formout.item" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item label="部件" prop="part">
+                    <el-input v-model="formout.part" disabled></el-input>
                   </el-form-item>
                   <el-form-item label="总订单量" prop="count">
                     <el-input v-model="formout.count" disabled></el-input>
@@ -94,7 +97,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="客户名称" prop="customerName">
+                  <el-form-item label="科室名称" prop="customerName">
                     <el-select v-model="formoutupdate.customerNameId" filterable placeholder="请选择" disabled>
                       <el-option v-for="item in customerNameOptions" :key="item.id" :label="item.itemName" :value="item.id">
                       </el-option>
@@ -103,11 +106,14 @@
                   <el-form-item label="品名" prop="name">
                     <el-input v-model="formoutupdate.name" disabled></el-input>
                   </el-form-item>
-                  <el-form-item label="PO#" prop="poNum">
+                  <el-form-item label="订单号" prop="poNum">
                     <el-input v-model="formoutupdate.poNum" disabled></el-input>
                   </el-form-item>
-                  <el-form-item label="ITEM" prop="item">
+                  <el-form-item label="品名" prop="item">
                     <el-input v-model="formoutupdate.item" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item label="部件" prop="part">
+                    <el-input v-model="formoutupdate.part" disabled></el-input>
                   </el-form-item>
                   <el-form-item label="订单总量" prop="count">
                     <el-input v-model="formoutupdate.count" disabled></el-input>
@@ -159,7 +165,7 @@
   </el-row>
   <el-row class="row selectrow">
     <el-col :span="2">
-      <span class="selectlable">客户名称</span>
+      <span class="selectlable">科室名称</span>
     </el-col>
     <el-col :span="4">
       <el-select size=mini v-model="customerNameSelect" clearable filterable placeholder="请选择">
@@ -203,11 +209,12 @@
     <el-col :span="24">
       <div style="display:none;">
         <el-table id="print" ref="print" :data="tableData" @selection-change="onTableSelectChange">
-          <el-table-column prop="customerName" label="客户名称" width=100> </el-table-column>
+          <el-table-column prop="customerName" label="科室名称" width=100> </el-table-column>
           <el-table-column prop="code" label="编号" width=100> </el-table-column>
           <el-table-column prop="name" label="品名" width=50> </el-table-column>
-          <el-table-column prop="poNum" label="PO#" width=100> </el-table-column>
-          <el-table-column prop="item" label="ITEM" width=100> </el-table-column>
+          <el-table-column prop="poNum" label="订单号" width=100> </el-table-column>
+          <el-table-column prop="item" label="品名" width=100> </el-table-column>
+          <el-table-column prop="part" label="部件" width=100> </el-table-column>
           <el-table-column prop="color" label="镀金颜色" width=50> </el-table-column>
           <el-table-column prop="bake" label="烤厅" width=50> </el-table-column>
           <el-table-column prop="count" label="总订单量" width=50> </el-table-column>
@@ -220,7 +227,7 @@
       <el-table :data="tableData" :height="autoheight" @selection-change="onTableSelectChange">
         <el-table-column type="selection" width=60>
         </el-table-column>
-        <el-table-column prop="customerName" label="客户名称" width=140> </el-table-column>
+        <el-table-column prop="customerName" label="科室名称" width=140> </el-table-column>
         <el-table-column prop="image" label="产品图片" width=100>
           <template slot-scope="scope">
             <div style="width:50%;height:50%;">
@@ -230,8 +237,9 @@
         </el-table-column>
         <el-table-column prop="code" label="编号" width=140> </el-table-column>
         <el-table-column prop="name" label="品名" width=140> </el-table-column>
-        <el-table-column prop="poNum" label="PO#" width=180> </el-table-column>
-        <el-table-column prop="item" label="ITEM" width=180> </el-table-column>
+        <el-table-column prop="poNum" label="订单号" width=180> </el-table-column>
+        <el-table-column prop="item" label="品名" width=180> </el-table-column>
+        <el-table-column prop="part" label="部件" width=180> </el-table-column>
         <el-table-column prop="color" label="镀金颜色" width=100> </el-table-column>
         <el-table-column prop="bake" label="烤厅" width=60> </el-table-column>
         <el-table-column prop="count" label="总订单量" width=100> </el-table-column>

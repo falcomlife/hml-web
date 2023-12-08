@@ -3,10 +3,10 @@
   <div v-if="this.$route.meta.level == 1">
     <el-row class="row selectrow">
       <el-col :span="2">
-        <span class="selectlable">客户名称</span>
+        <span class="selectlable">科室名称</span>
       </el-col>
       <el-col :span="4">
-        <el-input style="width:82%;" v-model="nameSelect" placeholder="请输入客户名称" clearable size=mini></el-input>
+        <el-input style="width:82%;" v-model="nameSelect" placeholder="请输入科室名称" clearable size=mini></el-input>
       </el-col>
       <el-col :span="1">
         <span class="selectlable">编号</span>
@@ -40,7 +40,7 @@
         <el-table :data="tableData" :height="autoheight" @selection-change="onTableSelectChange" >
           <el-table-column type="selection" min-width=10%>
           </el-table-column>
-          <el-table-column prop="name" label="客户名称" min-width=30%> </el-table-column>
+          <el-table-column prop="name" label="科室名称" min-width=30%> </el-table-column>
           <el-table-column prop="code" label="编号" min-width=30%> </el-table-column>
           <el-table-column prop="createTime" label="创建时间" min-width=20%> </el-table-column>
           <el-table-column label="操作" min-width=10%>

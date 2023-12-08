@@ -5,7 +5,7 @@
       <el-card class="box-card">
         <el-row class="row">
           <el-col :span="4">
-            <span class="boxlable">客户名称</span>
+            <span class="boxlable">科室名称</span>
           </el-col>
           <el-col :span="20">
             <div style="float: right;">
@@ -75,7 +75,7 @@
   <el-drawer :visible.sync="drawercustomer" :with-header="false" size='50%'>
     <div style="padding: 4% 10%;">
       <div style="padding-bottom: 1%;">
-        <span class="boxlable">客户名称</span>
+        <span class="boxlable">科室名称</span>
       </div>
       <el-divider></el-divider>
       <el-form ref="formCustomer" :rules="rules" :model="formCustomer" size="small">

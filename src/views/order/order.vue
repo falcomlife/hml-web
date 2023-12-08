@@ -8,7 +8,7 @@
           <el-tabs>
             <el-tab-pane label="新增订单" style="margin-top:4%;overflow-y: scroll;" :style="{height: scrollerHeight}">
               <el-form ref="formout" :rules="rules" :model="formout" size="small">
-                <el-form-item label="客户名称" prop="customerName">
+                <el-form-item label="科室名称" prop="customerName">
                   <el-select v-model="formout.customerName" filterable placeholder="请选择">
                     <el-option v-for="item in customerNameOptions" :key="item.id" :label="item.itemName" :value="item.id">
                     </el-option>
@@ -20,11 +20,20 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </el-form-item>
-                <el-form-item label="PO#" prop="poNum">
+                <el-form-item label="订单号" prop="poNum">
                   <el-input v-model="formout.poNum"></el-input>
                 </el-form-item>
-                <el-form-item label="ITEM" prop="item">
+                <el-form-item label="品名" prop="item">
                   <el-input v-model="formout.item"></el-input>
+                </el-form-item>
+                <el-form-item label="部件" prop="part">
+                  <el-autocomplete
+                      class="inline-input"
+                      v-model="formout.part"
+                      :fetch-suggestions="querySearch"
+                      placeholder="请输入内容"
+                      :trigger-on-focus="false"
+                  ></el-autocomplete>
                 </el-form-item>
                 <el-form-item :required=true label="镀金颜色" prop="color">
                   <el-select v-model="formout.color" filterable placeholder="请选择">
@@ -62,7 +71,7 @@
           <el-tabs>
             <el-tab-pane label="编辑订单" style="margin-top:4%;overflow-y: scroll;" :style="{height: scrollerHeight}">
               <el-form ref="formoutupdate" :rules="rules" :model="formoutupdate" size="small">
-                <el-form-item label="客户名称" prop="customerName">
+                <el-form-item label="科室名称" prop="customerName">
                   <el-select v-model="formoutupdate.customerNameId" filterable placeholder="请选择">
                     <el-option v-for="item in customerNameOptions" :key="item.id" :label="item.itemName" :value="item.id">
                     </el-option>
@@ -74,11 +83,14 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </el-form-item>
-                <el-form-item label="PO#" prop="poNum">
+                <el-form-item label="订单号" prop="poNum">
                   <el-input v-model="formoutupdate.poNum"></el-input>
                 </el-form-item>
-                <el-form-item label="ITEM" prop="item">
+                <el-form-item label="品名" prop="item">
                   <el-input v-model="formoutupdate.item"></el-input>
+                </el-form-item>
+                <el-form-item label="部件" prop="part">
+                  <el-input v-model="formoutupdate.part"></el-input>
                 </el-form-item>
                 <el-form-item label="镀金颜色" prop="color">
                   <el-select v-model="formoutupdate.colorId" filterable placeholder="请选择">
@@ -114,7 +126,7 @@
   </el-row>
   <el-row class="row selectrow">
     <el-col :span="2">
-      <span class="selectlable">客户名称</span>
+      <span class="selectlable">科室名称</span>
     </el-col>
     <el-col :span="4">
       <el-select size=mini v-model="customerNameSelect" clearable filterable placeholder="请选择">
@@ -157,16 +169,16 @@
   </el-row>
   <el-row class="row selectrow">
     <el-col :span="2">
-      <span class="selectlable">PO号</span>
+      <span class="selectlable">订单号</span>
     </el-col>
     <el-col :span="4">
-      <el-input size=mini style="width:82%;" v-model="poSelect" placeholder="请输入PO号" clearable></el-input>
+      <el-input size=mini style="width:82%;" v-model="poSelect" placeholder="请输入订单号" clearable></el-input>
     </el-col>
     <el-col :span="1">
-      <span class="selectlable">ITEM</span>
+      <span class="selectlable">品名</span>
     </el-col>
     <el-col :span="4">
-      <el-input size=mini style="width:82%;" v-model="itemSelect" placeholder="请输入ITEM" clearable></el-input>
+      <el-input size=mini style="width:82%;" v-model="itemSelect" placeholder="请输入品名" clearable></el-input>
     </el-col>
     <el-col :span="8" style="min-height:1px;" >
     </el-col>
@@ -188,10 +200,11 @@
         <div id="print" ref="print">
           <div>
             <el-table :data="tableData">
-              <el-table-column prop="customerName" label="客户名称" width=100> </el-table-column>
+              <el-table-column prop="customerName" label="科室名称" width=100> </el-table-column>
               <el-table-column prop="code" label="编号" width=180> </el-table-column>
-              <el-table-column prop="poNum" label="PO#" width=100> </el-table-column>
-              <el-table-column prop="item" label="ITEM" width=100> </el-table-column>
+              <el-table-column prop="poNum" label="订单号" width=100> </el-table-column>
+              <el-table-column prop="item" label="品名" width=100> </el-table-column>
+              <el-table-column prop="part" label="部件" width=100> </el-table-column>
               <el-table-column prop="color" label="镀金颜色" width=100> </el-table-column>
               <el-table-column prop="count" label="数量" width=100> </el-table-column>
               <el-table-column prop="price" label="单价" width=80> </el-table-column>
@@ -202,7 +215,7 @@
             <span class="print-result">价格合计：</span><span class="print-result">{{this.totalPrice}}</span><span class="print-result">元</span>
           </div>
           <div style="float: right;">
-            <div class="print-result">青岛同庆工艺品有限公司</div>
+            <div class="print-result">青岛韩美来工艺品有限公司</div>
             <div class="print-result">{{getCurrentTime()}}</div>
           </div>
         </div>
@@ -215,7 +228,7 @@
             <expandRow :order="scope.row" :expandType="'inStorageByOrder'"></expandRow>
           </template>
         </el-table-column>
-        <el-table-column prop="customerName" label="客户名称" width=200> </el-table-column>
+        <el-table-column prop="customerName" label="科室名称" width=200> </el-table-column>
         <el-table-column prop="image" label="订单图片" width=100>
           <template slot-scope="scope">
             <div style="width:50%;height:50%;">
@@ -224,8 +237,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="code" label="编号" width=180> </el-table-column>
-        <el-table-column prop="poNum" label="PO#" width=180> </el-table-column>
-        <el-table-column prop="item" label="ITEM" width=180> </el-table-column>
+        <el-table-column prop="poNum" label="订单号" width=180> </el-table-column>
+        <el-table-column prop="item" label="品名" width=180> </el-table-column>
+        <el-table-column prop="part" label="部件" width=180> </el-table-column>
         <el-table-column prop="color" label="镀金颜色" width=180> </el-table-column>
         <el-table-column prop="count" label="数量" width=100> </el-table-column>
         <el-table-column prop="partSumCount" label="组件总数" width=100> </el-table-column>

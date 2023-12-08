@@ -14,11 +14,13 @@ export default {
       poSelect: '',
       itemSelect: '',
       totalPrice: 0,
+      restaurants: [],
       formout: {
         customerName: '',
         image: '',
         poNum: '',
         item: '',
+        part: '',
         color: '',
         count: '',
         partCount: '',
@@ -31,6 +33,7 @@ export default {
         image: '',
         poNum: '',
         item: '',
+        part: '',
         color: '',
         count: '',
         partCount: '',
@@ -89,6 +92,7 @@ export default {
   created() {
     this.getList()
     this.getType()
+    this.loadParts()
     this.autoheight = window.innerHeight * 0.577
     this.avatarUrl = process.env.VUE_APP_BASE_URL + '/outStorage/image'
   },
@@ -98,6 +102,11 @@ export default {
     }
   },
   methods: {
+    loadParts(){
+      this.$api.order.loadParts().then(res => {
+        this.restaurants = res.data.rs
+      })
+    },
     getType() {
       this.$api.dict.getDict({
         type: "customer"
@@ -165,7 +174,7 @@ export default {
     submitForm() {
       this.$refs['formout'].validate((valid) => {
         if (valid) {
-          this.$api.processModify.save(this.formout)
+          this.$api.order.save(this.formout)
             .then(res => {
               if (res.data.s == "0") {
                 this.$message({
@@ -188,66 +197,66 @@ export default {
       })
     },
     // 直接修改，弃用
-    // submitFormUpdate() {
-    //   this.$refs['formoutupdate'].validate((valid) => {
-    //     if (valid) {
-    //       this.$api.order.update(this.formoutupdate)
-    //         .then(res => {
-    //           if (res.data.s == "0") {
-    //             this.$message({
-    //               showClose: true,
-    //               message: '修改成功',
-    //               type: 'success'
-    //             });
-    //             this.getList()
-    //             this.drawerupdate = false
-    //           } else {
-    //             this.$message({
-    //               showClose: true,
-    //               message: res.data.rs,
-    //               type: 'error'
-    //             });
-    //           }
-    //           this.$refs['formoutupdate'].resetFields();
-    //         })
-    //     }
-    //   })
-    // },
-    // 提交修改，创建审批流程
     submitFormUpdate() {
       this.$refs['formoutupdate'].validate((valid) => {
         if (valid) {
-          let common = this.formoutupdate.common
-          let source= JSON.stringify(this.formoutsource);
-          let target= JSON.stringify(this.formoutupdate);
-          let process = {
-            source: source,
-            target: target,
-            type: 1,
-            common: common
-          }
-          this.$api.processModify.save(process)
-              .then(res => {
-                if (res.data.s == "0") {
-                  this.$message({
-                    showClose: true,
-                    message: '提交成功',
-                    type: 'success'
-                  });
-                  this.getList()
-                  this.drawerupdate = false
-                } else {
-                  this.$message({
-                    showClose: true,
-                    message: res.data.rs,
-                    type: 'error'
-                  });
-                }
-                this.$refs['formoutupdate'].resetFields();
-              })
+          this.$api.order.update(this.formoutupdate)
+            .then(res => {
+              if (res.data.s == "0") {
+                this.$message({
+                  showClose: true,
+                  message: '修改成功',
+                  type: 'success'
+                });
+                this.getList()
+                this.drawerupdate = false
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: res.data.rs,
+                  type: 'error'
+                });
+              }
+              this.$refs['formoutupdate'].resetFields();
+            })
         }
       })
     },
+    //提交修改，创建审批流程
+    // submitFormUpdate() {
+    //   this.$refs['formoutupdate'].validate((valid) => {
+    //     if (valid) {
+    //       let common = this.formoutupdate.common
+    //       let source= JSON.stringify(this.formoutsource);
+    //       let target= JSON.stringify(this.formoutupdate);
+    //       let process = {
+    //         source: source,
+    //         target: target,
+    //         type: 1,
+    //         common: common
+    //       }
+    //       this.$api.order.save(process)
+    //           .then(res => {
+    //             if (res.data.s == "0") {
+    //               this.$message({
+    //                 showClose: true,
+    //                 message: '提交成功',
+    //                 type: 'success'
+    //               });
+    //               this.getList()
+    //               this.drawerupdate = false
+    //             } else {
+    //               this.$message({
+    //                 showClose: true,
+    //                 message: res.data.rs,
+    //                 type: 'error'
+    //               });
+    //             }
+    //             this.$refs['formoutupdate'].resetFields();
+    //           })
+    //     }
+    //   })
+    // },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -383,6 +392,18 @@ export default {
             duration: 1000
           })
         })
-    }
+    },
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      console.log(111,results)
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
   }
 }

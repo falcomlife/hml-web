@@ -175,7 +175,7 @@ export default {
           if (item.user == 1) {
             item.userName = "本公司权限"
           } else if (item.user == 2) {
-            item.userName = "客户权限"
+            item.userName = "科室权限"
           }
           if (item.isEnable) {
             item.isEnableName = "启用"

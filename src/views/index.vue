@@ -3,7 +3,7 @@
   <el-alert title="网络异常" type="error" description="网络请求未能成功发出，请检查本地电脑网络情况，检查是否使用代理。" show-icon v-if="this.alertShow" @close="alertClose">
   </el-alert>
   <el-container class="body" direction="vertical">
-    <el-header class="title" :style="{height: this.headerHeight1,lineHeight:this.headerHeight1}">青岛同庆工艺品有限公司 </el-header>
+    <el-header class="title" :style="{height: this.headerHeight1,lineHeight:this.headerHeight1}">青岛韩美来工艺品有限公司 </el-header>
     <el-header class="s-title" :style="{height: this.headerHeight2,lineHeight:this.headerHeight2}">
       <div style="float: right;width:6%;">
         <span class="s-title-span">{{this.username}}</span>
@@ -42,7 +42,7 @@
           </el-menu-item>
           <el-menu-item ref="meunItemCustomer" v-if="this.authorities.indexOf('M-6') != -1" index="/company">
             <div @mouseenter="menuItemEnter($event,'meunItemCustomer')" @mouseleave="menuItemLeave($event,'meunItemCustomer')">
-              <i class="el-icon-s-custom"></i><span class="self-menu-item">客户公司</span>
+              <i class="el-icon-s-custom"></i><span class="self-menu-item">科室公司</span>
             </div>
           </el-menu-item>
           <el-menu-item ref="meunItemDict" v-if="this.authorities.indexOf('M-5') != -1" index="/dict">

@@ -14,7 +14,9 @@ export default {
       poSelect: '',
       itemSelect: '',
       totalPrice: 0,
-      restaurants: [],
+      partRestaurants: [],
+      poNumRestaurants: [],
+      itemRestaurants: [],
       formout: {
         customerName: '',
         image: '',
@@ -93,6 +95,8 @@ export default {
     this.getList()
     this.getType()
     this.loadParts()
+    this.loadPoNums()
+    this.loadItems()
     this.autoheight = window.innerHeight * 0.577
     this.avatarUrl = process.env.VUE_APP_BASE_URL + '/outStorage/image'
   },
@@ -104,7 +108,17 @@ export default {
   methods: {
     loadParts(){
       this.$api.order.loadParts().then(res => {
-        this.restaurants = res.data.rs
+        this.partRestaurants = res.data.rs
+      })
+    },
+    loadPoNums(){
+      this.$api.order.loadPoNums().then(res => {
+        this.poNumRestaurants = res.data.rs
+      })
+    },
+    loadItems(){
+      this.$api.order.loadItems().then(res => {
+        this.itemRestaurants = res.data.rs
       })
     },
     getType() {
@@ -183,6 +197,9 @@ export default {
                   type: 'success'
                 });
                 this.getList()
+                this.loadParts()
+                this.loadPoNums()
+                this.loadItems()
                 this.draweradd = false
               } else {
                 this.$message({
@@ -209,6 +226,9 @@ export default {
                   type: 'success'
                 });
                 this.getList()
+                this.loadParts()
+                this.loadPoNums()
+                this.loadItems()
                 this.drawerupdate = false
               } else {
                 this.$message({
@@ -393,10 +413,21 @@ export default {
           })
         })
     },
-    querySearch(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-      console.log(111,results)
+    partQuerySearch(queryString, cb) {
+      var partRestaurants = this.partRestaurants;
+      var results = queryString ? partRestaurants.filter(this.createFilter(queryString)) : partRestaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    poNumQuerySearch(queryString, cb) {
+      var poNumRestaurants = this.poNumRestaurants;
+      var results = queryString ? poNumRestaurants.filter(this.createFilter(queryString)) : poNumRestaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    itemQuerySearch(queryString, cb) {
+      var itemRestaurants = this.itemRestaurants;
+      var results = queryString ? itemRestaurants.filter(this.createFilter(queryString)) : itemRestaurants;
       // 调用 callback 返回建议列表的数据
       cb(results);
     },

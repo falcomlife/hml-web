@@ -207,7 +207,7 @@
                     <el-input v-model="formoutupdate.inCount"></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" @click="submitFormUpdate()">提交修改</el-button>
+                    <el-button type="primary" v-if="$store.state.authorities.indexOf('B-9') != -1" @click="submitFormUpdate()">提交修改</el-button>
                   </el-form-item>
                 </el-card>
               </el-form>
@@ -245,16 +245,16 @@
     <el-col :span="6">
       <el-button-group>
         <el-tooltip class="item" effect="light" content="搜索信息" placement="bottom">
-          <el-button type="primary" icon="el-icon-search" @click="getList()" size=small round>搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="getList()" size=small>搜索</el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="light" content="新增入库信息" placement="bottom">
-          <el-button type="primary" icon="el-icon-document-add" @click="add()" size=small round>新增</el-button>
+        <el-tooltip v-if="$store.state.authorities.indexOf('B-6') != -1" class="item" effect="light" content="新增入库信息" placement="bottom">
+          <el-button type="primary" icon="el-icon-document-add" @click="add()" size=small>新增</el-button>
         </el-tooltip>
         <el-tooltip v-if="$store.state.authorities.indexOf('B-3') != -1" class="item" effect="light" content="删除" placement="bottom">
-          <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small round >删除</el-button>
+          <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small >删除</el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="打印" placement="bottom">
-          <el-button type='primary' icon="el-icon-printer" size=small round v-print="print">打印</el-button>
+          <el-button type='primary' icon="el-icon-printer" size=small v-print="print">打印</el-button>
         </el-tooltip>
       </el-button-group>
     </el-col>
@@ -274,7 +274,7 @@
     <el-col :span="6">
       <el-button-group>
         <el-tooltip class="item" effect="light" content="导出" placement="bottom">
-          <el-button type='primary' icon="el-icon-printer" size=small round @click="exportExcel()">导出</el-button>
+          <el-button type='primary' icon="el-icon-printer" size=small @click="exportExcel()">导出</el-button>
         </el-tooltip>
       </el-button-group>
     </el-col>

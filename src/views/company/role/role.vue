@@ -24,9 +24,9 @@
             <el-tooltip class="item" style="margin-right: 10px;" effect="light" content="修改" placement="bottom">
               <el-button type="primary" icon="el-icon-edit-outline" size="mini" circle @click="updateShow(scope.row)"></el-button>
             </el-tooltip>
-            <el-popover placement="right" width="560" trigger="click">
+            <el-popover placement="right" trigger="click">
               <h3 style="color: #909399;">配置权限</h3>
-              <el-table :data="authorityData" heigh="800">
+              <el-table :data="authorityData" style="height:600px; overflow-y: scroll;">
                 <el-table-column prop="inRole" width="60">
                   <template slot-scope="scopeRole">
                     <el-switch v-model="scopeRole.row.inRole" @change="(value) => inRoleChange(value,scope.row,scopeRole.row)">

@@ -42,7 +42,7 @@
           </el-menu-item>
           <el-menu-item ref="meunItemCustomer" v-if="this.authorities.indexOf('M-6') != -1" index="/company">
             <div @mouseenter="menuItemEnter($event,'meunItemCustomer')" @mouseleave="menuItemLeave($event,'meunItemCustomer')">
-              <i class="el-icon-s-custom"></i><span class="self-menu-item">科室公司</span>
+              <i class="el-icon-s-custom"></i><span class="self-menu-item">客户公司</span>
             </div>
           </el-menu-item>
           <el-menu-item ref="meunItemDict" v-if="this.authorities.indexOf('M-5') != -1" index="/dict">

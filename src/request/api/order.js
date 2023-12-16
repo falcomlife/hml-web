@@ -1,6 +1,16 @@
 import axios from '@/request/http.js'; // 导入http中创建的axios实例
 
 const order = {
+    loadPoNums (params) {
+        return axios.get(`/order/ponums`,{
+            params: params
+        });
+    },
+    loadItems (params) {
+        return axios.get(`/order/items`,{
+            params: params
+        });
+    },
     loadParts (params) {
         return axios.get(`/order/parts`,{
             params: params

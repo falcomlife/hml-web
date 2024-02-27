@@ -24,7 +24,7 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="订单号" prop="poNum">
-                    <el-input v-model="formout.poNum" disabled></el-input>
+                    <el-input npm v-model="formout.poNum" disabled></el-input>
                   </el-form-item>
                   <el-form-item label="品名" prop="item">
                     <el-input v-model="formout.item" disabled></el-input>
@@ -38,6 +38,12 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
+                  <el-form-item :required=true label="烤厅" prop="bake">
+                    <el-select v-model="formout.bake" filterable placeholder="请选择" disabled>
+                      <el-option v-for="item in bakeOptions" :key="item.id" :label="item.itemName" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
                   <el-form-item label="总订单量" prop="count">
                     <el-input v-model="formout.count" disabled></el-input>
                   </el-form-item>
@@ -45,27 +51,21 @@
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-claim drawer-hard">入库信息</i>
                   <el-divider> </el-divider>
-                  <el-form-item :required=true label="品名" prop="name">
-                    <el-input v-model="formout.name"></el-input>
-                  </el-form-item>
+<!--                  <el-form-item :required=true label="品名" prop="name">-->
+<!--                    <el-input v-model="formout.name"></el-input>-->
+<!--                  </el-form-item>-->
                   <el-form-item :required=true label="产品图片" prop="image">
                     <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false" :on-success="handleAddSuccess" :before-upload="beforeAddUpload">
                       <img v-if="formout.image" :src="formout.image" class="avatar" />
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </el-form-item>
-                  <el-form-item :required=true label="入库镀金颜色" prop="color">
-                    <el-select v-model="formout.color" filterable placeholder="请选择">
-                      <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item :required=true label="烤厅" prop="bake">
-                    <el-select v-model="formout.bake" filterable placeholder="请选择">
-                      <el-option v-for="item in bakeOptions" :key="item.id" :label="item.itemName" :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
+<!--                  <el-form-item :required=true label="入库镀金颜色" prop="color">-->
+<!--                    <el-select v-model="formout.color" filterable placeholder="请选择">-->
+<!--                      <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">-->
+<!--                      </el-option>-->
+<!--                    </el-select>-->
+<!--                  </el-form-item>-->
                   <el-form-item :required=true label="来料类别" prop="incomingType">
                     <el-select v-model="formout.incomingType" filterable placeholder="请选择">
                       <el-option v-for="item in incomingTypeOptions" :key="item.id" :label="item.itemName" :value="item.id">
@@ -87,7 +87,7 @@
                   <el-form-item :required=true label="组件数" prop="bunchCount">
                     <el-input type=number v-model="formout.bunchCount"></el-input>
                   </el-form-item>
-                  <el-form-item :required=true label="数量说明" prop="inCount">
+                  <el-form-item label="数量说明">
                     <el-input v-model="formout.inCount"></el-input>
                   </el-form-item>
                   <el-form-item :required=true label="单位" prop="unit">
@@ -155,27 +155,21 @@
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-claim drawer-hard">入库信息</i>
                   <el-divider> </el-divider>
-                  <el-form-item :required=true label="品名" prop="name">
-                    <el-input v-model="formoutupdate.name"></el-input>
-                  </el-form-item>
+<!--                  <el-form-item :required=true label="品名" prop="name">-->
+<!--                    <el-input v-model="formoutupdate.name"></el-input>-->
+<!--                  </el-form-item>-->
                   <el-form-item :required=true label="产品图片" prop="image">
                     <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false" :on-success="handleAddSuccess" :before-upload="beforeAddUpload">
                       <img v-if="formoutupdate.image" :src="formoutupdate.image" class="avatar" />
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </el-form-item>
-                  <el-form-item label="入库镀金颜色" prop="colorId">
-                    <el-select v-model="formoutupdate.colorId" filterable placeholder="请选择">
-                      <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item :required=true label="烤厅" prop="bakeId">
-                    <el-select v-model="formoutupdate.bakeId" filterable placeholder="请选择">
-                      <el-option v-for="item in bakeOptions" :key="item.id" :label="item.itemName" :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
+<!--                  <el-form-item label="入库镀金颜色" prop="colorId">-->
+<!--                    <el-select v-model="formoutupdate.colorId" filterable placeholder="请选择">-->
+<!--                      <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">-->
+<!--                      </el-option>-->
+<!--                    </el-select>-->
+<!--                  </el-form-item>-->
                   <el-form-item :required=true label="来料类别" prop="incomingTypeId">
                     <el-select v-model="formoutupdate.incomingTypeId" filterable placeholder="请选择">
                       <el-option v-for="item in incomingTypeOptions" :key="item.id" :label="item.itemName" :value="item.id">
@@ -203,7 +197,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item :required=true label="数量说明" prop="inCount">
+                  <el-form-item label="数量说明">
                     <el-input v-model="formoutupdate.inCount"></el-input>
                   </el-form-item>
                   <el-form-item>
@@ -294,7 +288,7 @@
                     <font color="red">{{item.customerName}}</font>
                   </el-descriptions-item>
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="编号">{{item.code}}</el-descriptions-item>
-                  <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="品名">{{item.name}}</el-descriptions-item>
+                  <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="品名">{{item.item}}</el-descriptions-item>
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="烤厅">{{item.bake}}</el-descriptions-item>
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="组件数">{{item.bunchCount}}</el-descriptions-item>
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="数量说明">
@@ -310,12 +304,12 @@
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="部件">{{item.part}}</el-descriptions-item>
                   <el-descriptions-item content-class-name="self-descriptions-item" label-class-name="self-descriptions-item" label="总订单量">{{item.count}}</el-descriptions-item>
                 </el-descriptions>
-                <div>
-                  <div><label style="padding-bottom: 0px;" class="print-font">入库镀金颜色:</label></div>
-                  <div>
-                    <font style="color:red" class="print-font">{{item.color}}</font>
-                  </div>
-                </div>
+<!--                <div>-->
+<!--                  <div><label style="padding-bottom: 0px;" class="print-font">入库镀金颜色:</label></div>-->
+<!--                  <div>-->
+<!--                    <font style="color:red" class="print-font">{{item.color}}</font>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <div>
                   <div><label style="padding-bottom: 0px;" class="print-font">订单镀金颜色:</label></div>
                   <div><span class="print-font">{{item.orderColor}}</span></div>
@@ -337,13 +331,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="code" label="编号" width=120> </el-table-column>
-        <el-table-column prop="name" label="品名" width=120> </el-table-column>
         <el-table-column prop="poNum" label="订单号" width=160> </el-table-column>
         <el-table-column prop="item" label="品名" width=160> </el-table-column>
         <el-table-column prop="part" label="部件" width=160> </el-table-column>
         <el-table-column prop="orderColor" label="订单镀金颜色" width=110> </el-table-column>
-        <el-table-column prop="color" label="入库镀金颜色" width=110> </el-table-column>
-        <el-table-column prop="bake" label="烤厅" width=60> </el-table-column>
+<!--        <el-table-column prop="color" label="入库镀金颜色" width=110> </el-table-column>-->
+        <el-table-column prop="bake" label="烤厅" width=110> </el-table-column>
         <el-table-column prop="count" label="总订单量" width=100> </el-table-column>
         <el-table-column prop="bunchCount" label="组件数" width=70> </el-table-column>
         <el-table-column prop="unit" label="单位" width=50> </el-table-column>

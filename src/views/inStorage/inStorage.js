@@ -292,7 +292,7 @@ export default {
       return (window.innerHeight - 100) + 'px'; //自定义高度需求
     },
     printCellHeight: function() {
-      return (window.innerHeight) * 0.82 + 'px'; //自定义高度需求
+      return (window.innerHeight) * 0.82+ 'px'; //自定义高度需求
     }
   },
   methods: {
@@ -545,6 +545,7 @@ export default {
             this.formout.part = res.data.rs.part
             this.formout.count = res.data.rs.count
             this.formout.orderColor = res.data.rs.color
+            this.formout.bake = res.data.rs.bake
             this.formout.orderId = orderId
 
             this.formoutupdate.customerNameId = res.data.rs.customerName
@@ -553,6 +554,7 @@ export default {
             this.formoutupdate.part = res.data.rs.part
             this.formoutupdate.count = res.data.rs.count
             this.formoutupdate.orderColorId = res.data.rs.color
+            this.formoutupdate.bake = res.data.rs.bake
 
             this.getOutStorageByCode(null, orderId, this.formout.item, true)
 

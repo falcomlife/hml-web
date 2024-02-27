@@ -11,6 +11,16 @@ const order = {
             params: params
         });
     },
+    loadPartsByItem (params) {
+        return axios.get(`/order/item/parts`,{
+            params: params
+        });
+    },
+    loadInfoByItemPart(params){
+        return axios.get(`/order/colorPartcount`,{
+            params: params
+        });
+    },
     loadParts (params) {
         return axios.get(`/order/parts`,{
             params: params

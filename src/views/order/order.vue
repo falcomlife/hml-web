@@ -24,7 +24,7 @@
                   </el-form-item>
                   <el-form-item label="订单号" prop="poNum">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formout.poNum"
                         :fetch-suggestions="poNumQuerySearch"
                         placeholder="请输入内容"
@@ -33,25 +33,31 @@
                   </el-form-item>
                   <el-form-item label="品名" prop="item">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formout.item"
                         :fetch-suggestions="itemQuerySearch"
                         placeholder="请输入内容"
-                        :trigger-on-focus="false"
+                        @select="itemHandleSelect"
                     ></el-autocomplete>
                   </el-form-item>
                   <el-form-item label="部件" prop="part">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formout.part"
                         :fetch-suggestions="partQuerySearch"
                         placeholder="请输入内容"
-                        :trigger-on-focus="false"
+                        @select="partHandleSelect"
                     ></el-autocomplete>
                   </el-form-item>
                   <el-form-item :required=true label="镀金颜色" prop="color">
                     <el-select v-model="formout.color" filterable placeholder="请选择">
                       <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item :required=true label="烤厅" prop="bake">
+                    <el-select v-model="formout.bake" filterable placeholder="请选择">
+                      <el-option v-for="item in bakeOptions" :key="item.id" :label="item.itemName" :value="item.id">
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -101,7 +107,7 @@
                   </el-form-item>
                   <el-form-item label="订单号" prop="poNum">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formoutupdate.poNum"
                         :fetch-suggestions="poNumQuerySearch"
                         placeholder="请输入内容"
@@ -110,25 +116,31 @@
                   </el-form-item>
                   <el-form-item label="品名" prop="item">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formoutupdate.item"
                         :fetch-suggestions="itemQuerySearch"
                         placeholder="请输入内容"
-                        :trigger-on-focus="false"
+                        @select="itemHandleSelect"
                     ></el-autocomplete>
                   </el-form-item>
                   <el-form-item label="部件" prop="part">
                     <el-autocomplete
-                        class="inline-input"
+                        class="inline-input autocomplete"
                         v-model="formoutupdate.part"
                         :fetch-suggestions="partQuerySearch"
                         placeholder="请输入内容"
-                        :trigger-on-focus="false"
+                        @select="partHandleSelect"
                     ></el-autocomplete>
                   </el-form-item>
                   <el-form-item label="镀金颜色" prop="color">
                     <el-select v-model="formoutupdate.colorId" filterable placeholder="请选择">
                       <el-option v-for="item in colorOptions" :key="item.id" :label="item.itemName" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="烤厅" prop="bakeId">
+                    <el-select v-model="formoutupdate.bakeId" filterable placeholder="请选择">
+                      <el-option v-for="item in bakeOptions" :key="item.id" :label="item.itemName" :value="item.id">
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -196,7 +208,7 @@
           </el-tooltip>
           <el-tooltip v-if="$store.state.authorities.indexOf('B-5') != -1" class="item" effect="light"
                       content="新增订单信息" placement="bottom">
-            <el-button type="primary" icon="el-icon-document-add" @click="draweradd=true" size=small>新增</el-button>
+            <el-button type="primary" icon="el-icon-document-add" @click="draweraddClick()" size=small>新增</el-button>
           </el-tooltip>
           <el-tooltip v-if="$store.state.authorities.indexOf('B-2') != -1" class="item" effect="light" content="删除"
                       placement="bottom">
@@ -244,6 +256,7 @@
                 <el-table-column prop="item" label="品名" width=100></el-table-column>
                 <el-table-column prop="part" label="部件" width=100></el-table-column>
                 <el-table-column prop="color" label="镀金颜色" width=100></el-table-column>
+                <el-table-column prop="bake" label="烤厅" width=100></el-table-column>
                 <el-table-column prop="count" label="数量" width=100></el-table-column>
                 <el-table-column prop="price" label="单价" width=80></el-table-column>
                 <el-table-column prop="sum" label="合计" width=80></el-table-column>
@@ -280,6 +293,7 @@
           <el-table-column prop="item" label="品名" width=180></el-table-column>
           <el-table-column prop="part" label="部件" width=180></el-table-column>
           <el-table-column prop="color" label="镀金颜色" width=180></el-table-column>
+          <el-table-column prop="bake" label="烤厅" width=180> </el-table-column>
           <el-table-column prop="count" label="数量" width=100></el-table-column>
           <el-table-column prop="partSumCount" label="组件总数" width=100></el-table-column>
           <el-table-column prop="partSumCountCal" label="已入库组件总数" width=140>

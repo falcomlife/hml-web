@@ -209,17 +209,16 @@
     <el-col :span="24">
       <div style="display:none;">
         <el-table id="print" ref="print" :data="tableData" @selection-change="onTableSelectChange">
-          <el-table-column prop="customerName" label="科室名称" width=100> </el-table-column>
-          <el-table-column prop="code" label="编号" width=100> </el-table-column>
+          <el-table-column prop="customerName" label="科室名称" width=50> </el-table-column>
           <el-table-column prop="name" label="品名" width=50> </el-table-column>
           <el-table-column prop="poNum" label="订单号" width=100> </el-table-column>
           <el-table-column prop="item" label="品名" width=100> </el-table-column>
           <el-table-column prop="part" label="部件" width=100> </el-table-column>
-          <el-table-column prop="color" label="镀金颜色" width=50> </el-table-column>
-          <el-table-column prop="bake" label="烤厅" width=50> </el-table-column>
+          <el-table-column prop="color" label="镀金颜色" width=100> </el-table-column>
+          <el-table-column prop="bake" label="烤厅" width=100> </el-table-column>
           <el-table-column prop="count" label="总订单量" width=50> </el-table-column>
           <el-table-column prop="outType" label="出库类型" width=50> </el-table-column>
-          <el-table-column prop="bunchCount" label="组件数" width=80> </el-table-column>
+          <el-table-column prop="bunchCount" label="组件数" width=50> </el-table-column>
           <el-table-column prop="outCount" label="数量说明" width=80> </el-table-column>
           <el-table-column prop="createTime" label="创建时间" width=100> </el-table-column>
         </el-table>

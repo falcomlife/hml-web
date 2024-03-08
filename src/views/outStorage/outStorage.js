@@ -442,6 +442,39 @@ export default {
         .catch(function(error) {
           console.log(error)
         })
-    }
+    },
+    exportExcel() {
+      let start = ''
+      let end = ''
+      if (this.time != null && this.time.length == 2) {
+        start = moment(this.time[0]).format('YYYY-MM-DD HH:mm:ss')
+        end = moment(this.time[1]).format('YYYY-MM-DD HH:mm:ss')
+      }
+      this.$api.outStorage.exportExcel({
+        customerNameItem: this.customerNameSelect,
+        code: this.codeSelect,
+        starttime: start,
+        endtime: end
+      }).then(
+          res => {
+            var blob = new Blob([res.data], {
+              type: `application/vnd.ms-excel`
+            })
+            const link = document.createElement('a')
+            const name = `出库明细.xlsx`
+            link.style.display = 'none'
+            link.href = URL.createObjectURL(blob)
+            link.setAttribute('download', name)
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            this.$message({
+              title: '成功',
+              message: '导出成功！',
+              type: 'success',
+              duration: 1000
+            })
+          })
+    },
   }
 }

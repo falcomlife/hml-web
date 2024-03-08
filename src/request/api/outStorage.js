@@ -22,7 +22,12 @@ const order = {
   },
   delete(body) {
     return axios.delete(`/outStorage`, body)
-  }
+  },
+  exportExcel (params) {
+    return axios.post(`/outStorage/excel`,params,{
+      responseType: 'blob'
+    });
+  },
 }
 
 export default order;

@@ -202,6 +202,9 @@
         <el-tooltip class="item" effect="light" content="打印" placement="bottom">
           <el-button type='primary' icon="el-icon-printer" size=small v-print="print">打印</el-button>
         </el-tooltip>
+        <el-tooltip class="item" effect="light" content="导出" placement="bottom">
+          <el-button type='primary' icon="el-icon-printer" size=small @click="exportExcel()">导出</el-button>
+        </el-tooltip>
       </el-button-group>
     </el-col>
   </el-row>

@@ -309,6 +309,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="partSumCountSubOutStroageGoodsSumCount" label="剩余待出库数量" width=100></el-table-column>
+          <el-table-column prop="overPartSumCount" label="超出出库数量" width=100></el-table-column>
           <el-table-column prop="replatCount" label="返镀数量" width=100 label-class-name="table-col-label-analy"
                            class-name="table-col-analy"></el-table-column>
           <el-table-column prop="replatRatio" label="返镀比率(%)" label-class-name="table-col-label-analy"

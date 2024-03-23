@@ -107,10 +107,11 @@ export default {
             xAxis: {
               type: 'value',
               boundaryGap: [0, 0.01],
-              name: '金额（元）'
+              name: '组件数（个）'
             },
             yAxis: {
               type: 'category',
+              name: '镀金颜色'
             },
             visualMap: {
               orient: 'horizontal',
@@ -125,7 +126,7 @@ export default {
               }
             },
             series: [{
-              name: '2011',
+              name: '数量',
               type: 'bar',
               encode: {
                 x: 'amount',
@@ -205,10 +206,12 @@ export default {
               interval: 0,
               rotate: 45
             },
-            data: name
+            data: name,
+            name: '科室'
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            name: '组件数（个）'
           },
           series: [{
             data: count,

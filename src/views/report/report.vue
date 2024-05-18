@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.authorities.indexOf('M-4') != -1">
+<div v-show="this.authorities.indexOf('M-4') != -1">
   <el-row>
     <el-col :span="12">
       <el-row>

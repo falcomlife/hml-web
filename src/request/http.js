@@ -71,7 +71,7 @@ const errorHandle = (status, data) => {
 
 // 创建axios实例
 var instance = axios.create({
-  timeout: 1000 * 30
+  timeout: 1000 * 120
 });
 
 

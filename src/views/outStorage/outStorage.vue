@@ -23,9 +23,6 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="品名" prop="name">
-                    <el-input v-model="formout.name" disabled></el-input>
-                  </el-form-item>
                   <el-form-item label="订单号" prop="poNum">
                     <el-input v-model="formout.poNum" disabled></el-input>
                   </el-form-item>
@@ -37,6 +34,9 @@
                   </el-form-item>
                   <el-form-item label="总订单量" prop="count">
                     <el-input v-model="formout.count" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item label="订单组件数" prop="partSumCount">
+                    <el-input v-model="formout.partSumCount" disabled></el-input>
                   </el-form-item>
                   <el-form-item label="产品图片" prop="image">
                     <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false" :on-success="handleAddSuccess" :before-upload="beforeAddUpload" disabled>
@@ -103,9 +103,6 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="品名" prop="name">
-                    <el-input v-model="formoutupdate.name" disabled></el-input>
-                  </el-form-item>
                   <el-form-item label="订单号" prop="poNum">
                     <el-input v-model="formoutupdate.poNum" disabled></el-input>
                   </el-form-item>
@@ -117,6 +114,9 @@
                   </el-form-item>
                   <el-form-item label="订单总量" prop="count">
                     <el-input v-model="formoutupdate.count" disabled></el-input>
+                  </el-form-item>
+                  <el-form-item label="订单组件数" prop="partSumCount">
+                    <el-input v-model="formoutupdate.partSumCount" disabled></el-input>
                   </el-form-item>
                   <el-form-item label="产品图片" prop="image">
                     <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false" :on-success="handleUpdateSuccess" :before-upload="beforeUpdateUpload" disabled>
@@ -154,7 +154,7 @@
                   </el-form-item>
                 </el-card>
                 <el-form-item>
-                  <el-button type="primary" v-if="$store.state.authorities.indexOf('B-10') != -1" @click="submitFormUpdate()">提交修改</el-button>
+                  <el-button type="primary" v-show="$store.state.authorities.indexOf('B-10') != -1" @click="submitFormUpdate()">提交修改</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -193,15 +193,35 @@
         <el-tooltip class="item" effect="light" content="搜索信息" placement="bottom">
           <el-button type="primary" icon="el-icon-search" @click="getList()" size=small>搜索</el-button>
         </el-tooltip>
-        <el-tooltip v-if="$store.state.authorities.indexOf('B-7') != -1" class="item" effect="light" content="新增出库信息" placement="bottom">
+        <el-tooltip v-show="$store.state.authorities.indexOf('B-7') != -1" class="item" effect="light" content="新增出库信息" placement="bottom">
           <el-button type="primary" icon="el-icon-document-add" @click="draweradd=true" size=small>新增</el-button>
         </el-tooltip>
-        <el-tooltip v-if="$store.state.authorities.indexOf('B-4') != -1" class="item" effect="light" content="删除" placement="bottom">
+        <el-tooltip v-show="$store.state.authorities.indexOf('B-4') != -1" class="item" effect="light" content="删除" placement="bottom">
           <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small>删除</el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="打印" placement="bottom">
           <el-button type='primary' icon="el-icon-printer" size=small v-print="print">打印</el-button>
         </el-tooltip>
+      </el-button-group>
+    </el-col>
+  </el-row>
+  <el-row class="row selectrow">
+    <el-col :span="2">
+      <span class="selectlable">订单号</span>
+    </el-col>
+    <el-col :span="4">
+      <el-input size=mini style="width:80%;" v-model="poNumSelect" placeholder="请输入订单号" clearable></el-input>
+    </el-col>
+    <el-col :span="1">
+      <span class="selectlable">品名</span>
+    </el-col>
+    <el-col :span="4">
+      <el-input size=mini style="width:80%;" v-model="itemSelect" placeholder="请输入品名" clearable></el-input>
+    </el-col>
+    <el-col :span="7" style="min-height:1px;" >
+    </el-col>
+    <el-col :span="6">
+      <el-button-group>
         <el-tooltip class="item" effect="light" content="导出" placement="bottom">
           <el-button type='primary' icon="el-icon-printer" size=small @click="exportExcel()">导出</el-button>
         </el-tooltip>
@@ -213,7 +233,6 @@
       <div style="display:none;">
         <el-table id="print" ref="print" :data="tableData" @selection-change="onTableSelectChange">
           <el-table-column prop="customerName" label="科室名称" width=50> </el-table-column>
-          <el-table-column prop="name" label="品名" width=50> </el-table-column>
           <el-table-column prop="poNum" label="订单号" width=100> </el-table-column>
           <el-table-column prop="item" label="品名" width=100> </el-table-column>
           <el-table-column prop="part" label="部件" width=100> </el-table-column>
@@ -238,13 +257,13 @@
           </template>
         </el-table-column>
         <el-table-column prop="code" label="编号" width=140> </el-table-column>
-        <el-table-column prop="name" label="品名" width=140> </el-table-column>
         <el-table-column prop="poNum" label="订单号" width=180> </el-table-column>
         <el-table-column prop="item" label="品名" width=180> </el-table-column>
         <el-table-column prop="part" label="部件" width=180> </el-table-column>
         <el-table-column prop="color" label="镀金颜色" width=100> </el-table-column>
         <el-table-column prop="bake" label="烤厅" width=60> </el-table-column>
         <el-table-column prop="count" label="总订单量" width=100> </el-table-column>
+        <el-table-column prop="partSumCount" label="订单组件数" width=120> </el-table-column>
         <el-table-column prop="outType" label="出库类型" width=80> </el-table-column>
         <el-table-column prop="inCount" label="入库数量" width=80> </el-table-column>
         <el-table-column prop="bunchCount" label="组件数" width=70> </el-table-column>

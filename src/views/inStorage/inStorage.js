@@ -83,6 +83,13 @@ export default {
         callback();
       }
     };
+    var unit = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('不能为空'));
+      } else {
+        callback();
+      }
+    };
     return {
       tableData: [],
       tableDataPrint: [],
@@ -105,6 +112,8 @@ export default {
         itemName: "克"
       }],
       codeSelect: '',
+      itemSelect: '',
+      poNumSelect: '',
       formmodule: {
         id: "",
         tempOrderId: "",
@@ -214,14 +223,6 @@ export default {
           validator: orderCode,
           trigger: 'blur'
         }],
-        color: [{
-          validator: color,
-          trigger: 'blur'
-        }],
-        name: [{
-          validator: name,
-          trigger: 'blur'
-        }],
         image: [{
           validator: image,
           trigger: 'blur'
@@ -230,24 +231,12 @@ export default {
           validator: bake,
           trigger: 'blur'
         }],
-        bunchCount: [{
-          validator: bunchCount,
-          trigger: 'blur'
-        }],
-        inCount: [{
-          validator: inCount,
-          trigger: 'blur'
-        }],
         incomingType: [{
           validator: incomingType,
           trigger: 'blur'
         }],
-        outStorageCode: [{
-          validator: outStorageCode,
-          trigger: 'blur'
-        }],
-        badReason: [{
-          validator: badReason,
+        unit: [{
+          validator: unit,
           trigger: 'blur'
         }],
       },
@@ -329,6 +318,8 @@ export default {
           pageIndex: this.pageIndex,
           pageSize: this.pageSize,
           customerNameItem: this.customerNameSelect,
+          item: this.itemSelect,
+          poNum: this.poNumSelect,
           incomingTypeItem: this.incomingTypeSelect,
           code: this.codeSelect,
           starttime: start,
@@ -376,6 +367,7 @@ export default {
     },
     submitForm() {
       this.$refs['formout'].validate((valid) => {
+        console.log(this.formout,"update valid")
         if (valid) {
           if ("个" == this.formout.unit) {
             this.formout.unit = 1
@@ -405,6 +397,7 @@ export default {
     },
     submitFormUpdate() {
       this.$refs['formoutupdate'].validate((valid) => {
+        console.log("valid",valid)
         if (valid) {
           if (typeof this.formoutupdate.tempOrderId != "undefined") {
             this.formoutupdate.orderId = this.formoutupdate.tempOrderId
@@ -544,6 +537,7 @@ export default {
             this.formout.item = res.data.rs.item
             this.formout.part = res.data.rs.part
             this.formout.count = res.data.rs.count
+            this.formout.partSumCount = res.data.rs.partSumCount
             this.formout.orderColor = res.data.rs.color
             this.formout.bake = res.data.rs.bake
             this.formout.orderId = orderId
@@ -553,6 +547,7 @@ export default {
             this.formoutupdate.item = res.data.rs.item
             this.formoutupdate.part = res.data.rs.part
             this.formoutupdate.count = res.data.rs.count
+            this.formoutupdate.partSumCount = res.data.rs.partSumCount
             this.formoutupdate.orderColorId = res.data.rs.color
             this.formoutupdate.bake = res.data.rs.bake
 
@@ -606,6 +601,8 @@ export default {
       }
       this.$api.inStorage.exportExcel({
         customerNameItem: this.customerNameSelect,
+        item: this.itemSelect,
+        poNum: this.poNumSelect,
         incomingType: this.incomingTypeSelect,
         code: this.codeSelect,
         starttime: start,

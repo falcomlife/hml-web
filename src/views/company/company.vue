@@ -1,6 +1,6 @@
 <template>
 <div class="content-body">
-  <div v-if="this.$route.meta.level == 1">
+  <div v-show="this.$route.meta.level == 1">
     <el-row class="row selectrow">
       <el-col :span="2">
         <span class="selectlable">科室名称</span>
@@ -60,7 +60,7 @@
       </el-col>
     </el-row>
   </div>
-  <router-view v-if="this.$route.meta.level == 2" :key="Math.random()"></router-view>
+  <router-view v-show="this.$route.meta.level == 2" :key="Math.random()"></router-view>
 </div>
 </template>
 

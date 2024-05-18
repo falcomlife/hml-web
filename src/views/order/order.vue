@@ -70,6 +70,13 @@
                   <el-form-item label="组件总数量" prop="partSumCount">
                     <el-input type=number v-model="formout.partSumCount"></el-input>
                   </el-form-item>
+                  <el-form-item label="交货时间" prop="deliveryTime">
+                    <el-date-picker
+                        v-model="formout.deliveryTime"
+                        type="date"
+                        placeholder="选择日期">
+                    </el-date-picker>
+                  </el-form-item>
                   <el-form-item label="单价" prop="price">
                     <el-input type=number v-model="formout.price" @change="formoutValueChange"></el-input>
                   </el-form-item>
@@ -145,14 +152,20 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="数量" prop="count">
-                    <el-input type=number v-model="formoutupdate.count" @change="formoutupdateValueChange"></el-input>
+                    <el-input type=number v-model="formoutupdate.count"></el-input>
                   </el-form-item>
                   <el-form-item label="每套组件数量" prop="partCount">
-                    <el-input type=number v-model="formoutupdate.partCount"
-                              @change="formoutupdateValueChange"></el-input>
+                    <el-input type=number v-model="formoutupdate.partCount" @change="formoutupdateValueChange"></el-input>
                   </el-form-item>
                   <el-form-item label="组件数量" prop="partSumCount">
-                    <el-input type=number v-model="formoutupdate.partSumCount"></el-input>
+                    <el-input type=number v-model="formoutupdate.partSumCount" @change="formoutupdateValueChange"></el-input>
+                  </el-form-item>
+                  <el-form-item label="交货时间" prop="deliveryTime">
+                    <el-date-picker
+                        v-model="formoutupdate.deliveryTime"
+                        type="date"
+                        placeholder="选择日期">
+                    </el-date-picker>
                   </el-form-item>
                   <el-form-item label="单价" prop="price">
                     <el-input type=number v-model="formoutupdate.price" @change="formoutupdateValueChange"></el-input>
@@ -161,7 +174,7 @@
                     <el-input type=number v-model="formoutupdate.sum"></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" v-if="$store.state.authorities.indexOf('B-8') != -1"
+                    <el-button type="primary" v-show="$store.state.authorities.indexOf('B-8') != -1"
                                @click="submitFormUpdate()">提交修改
                     </el-button>
                   </el-form-item>
@@ -170,7 +183,6 @@
             </el-tabs>
           </div>
         </el-drawer>
-
       </el-col>
     </el-row>
     <el-row class="row selectrow">
@@ -183,45 +195,10 @@
           </el-option>
         </el-select>
       </el-col>
-      <el-col :span="1">
-        <span class="selectlable">编号</span>
-      </el-col>
-      <el-col :span="4">
-        <el-input size=mini style="width:82%;" v-model="codeSelect" placeholder="请输入编号" clearable></el-input>
-      </el-col>
-      <el-col :span="2">
-        <span class="selectlable">时间范围</span>
-      </el-col>
-      <el-col :span="6">
-        <div class="block">
-          <el-date-picker size=mini style="width:80%;" v-model="time" type="daterange" align="right" unlink-panels
-                          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
-                          :picker-options="pickerOptions">
-          </el-date-picker>
-        </div>
-      </el-col>
-
-      <el-col :span="5">
-        <el-button-group>
-          <el-tooltip class="item" effect="light" content="搜索信息" placement="bottom">
-            <el-button type="primary" icon="el-icon-search" @click="getList()" size=small>搜索</el-button>
-          </el-tooltip>
-          <el-tooltip v-if="$store.state.authorities.indexOf('B-5') != -1" class="item" effect="light"
-                      content="新增订单信息" placement="bottom">
-            <el-button type="primary" icon="el-icon-document-add" @click="draweraddClick()" size=small>新增</el-button>
-          </el-tooltip>
-          <el-tooltip v-if="$store.state.authorities.indexOf('B-2') != -1" class="item" effect="light" content="删除"
-                      placement="bottom">
-            <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small>删除</el-button>
-          </el-tooltip>
-        </el-button-group>
-      </el-col>
-    </el-row>
-    <el-row class="row selectrow">
       <el-col :span="2">
         <span class="selectlable">订单号</span>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <el-input size=mini style="width:82%;" v-model="poSelect" placeholder="请输入订单号" clearable></el-input>
       </el-col>
       <el-col :span="1">
@@ -230,7 +207,64 @@
       <el-col :span="4">
         <el-input size=mini style="width:82%;" v-model="itemSelect" placeholder="请输入品名" clearable></el-input>
       </el-col>
-      <el-col :span="8" style="min-height:1px;">
+      <el-col :span="5">
+        <el-button-group>
+          <el-tooltip class="item" effect="light" content="搜索信息" placement="bottom">
+            <el-button type="primary" icon="el-icon-search" @click="getList()" size=small>搜索</el-button>
+          </el-tooltip>
+          <el-tooltip v-show="$store.state.authorities.indexOf('B-5') != -1" class="item" effect="light"
+                      content="新增订单信息" placement="bottom">
+            <el-button type="primary" icon="el-icon-document-add" @click="draweraddClick()" size=small>新增</el-button>
+          </el-tooltip>
+          <el-tooltip v-show="$store.state.authorities.indexOf('B-2') != -1" class="item" effect="light" content="删除"
+                      placement="bottom">
+            <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small>删除</el-button>
+          </el-tooltip>
+        </el-button-group>
+      </el-col>
+    </el-row>
+    <el-row class="row selectrow">
+      <el-col :span="2">
+        <span class="selectlable">订单编号</span>
+      </el-col>
+      <el-col :span="4">
+        <el-input size=mini style="width:82%;" v-model="codeSelect" placeholder="请输入编号" clearable></el-input>
+      </el-col>
+      <el-col :span="2">
+        <span class="selectlable">时间类别</span>
+      </el-col>
+      <el-col :span="3">
+        <el-select size=mini style="width:72%;" v-model="selectTimeFlag" clearable filterable placeholder="请选择">
+          <el-option v-for="item in selectTimeFlagOptions" :key="item.id" :label="item.itemName" :value="item.id">
+          </el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="2" style="min-height:1px;">
+        <span class="selectlable" v-show="selectTimeFlag == 1">订单时间范围</span>
+        <span class="selectlable" v-show="selectTimeFlag == 2">入库时间范围</span>
+        <span class="selectlable" v-show="selectTimeFlag == 3">出库时间范围</span>
+      </el-col>
+      <el-col :span="5" style="min-height:1px;">
+        <div class="block" v-show="selectTimeFlag == 1">
+          <el-date-picker size=mini v-model="time" type="daterange" align="right" unlink-panels
+                          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
+        <div class="block" v-show="selectTimeFlag == 2">
+          <el-date-picker size=mini v-model="inTime" type="daterange" align="right" unlink-panels
+                          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
+        <div class="block" v-show="selectTimeFlag == 3">
+          <el-date-picker size=mini v-model="outTime" type="daterange" align="right" unlink-panels
+                          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="1" style="min-height:1px;">
       </el-col>
       <el-col :span="4">
         <el-button-group>
@@ -241,7 +275,43 @@
             <el-button type='primary' icon="el-icon-printer" size=small v-print="print">打印</el-button>
           </el-tooltip>
         </el-button-group>
+      </el-col>
+    </el-row>
 
+    <el-row class="row selectrow">
+      <el-col :span="2">
+        <span class="selectlable">入库编号</span>
+      </el-col>
+      <el-col :span="4">
+        <el-input size=mini style="width:82%;" v-model="inCodeSelect" placeholder="请输入入库编号" clearable></el-input>
+      </el-col>
+      <el-col :span="2">
+        <span class="selectlable">来料类别</span>
+      </el-col>
+      <el-col :span="3">
+        <el-select size=mini style="width:72%;" v-model="incomingTypeSelect" clearable filterable placeholder="请选择">
+          <el-option v-for="item in incomingTypeOptions" :key="item.id" :label="item.itemName" :value="item.id">
+          </el-option>
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row class="row selectrow">
+      <el-col :span="2">
+        <span class="selectlable">出库编号</span>
+      </el-col>
+      <el-col :span="4">
+        <el-input size=mini style="width:82%;" v-model="outCodeSelect" placeholder="请输入出库编号" clearable></el-input>
+      </el-col>
+      <el-col :span="2" style="min-height:1px;">
+        <span class="selectlable">交货时间范围</span>
+      </el-col>
+      <el-col :span="5" style="min-height:1px;">
+        <div class="block">
+          <el-date-picker size=mini v-model="deliveryTime" type="daterange" align="right" unlink-panels
+                          range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
       </el-col>
     </el-row>
     <el-row class="row">
@@ -262,38 +332,44 @@
                 <el-table-column prop="sum" label="合计" width=80></el-table-column>
               </el-table>
             </div>
-            <div>
-              <span class="print-result">价格合计：</span><span class="print-result">{{ this.totalPrice }}</span><span
-                class="print-result">元</span>
-            </div>
+            <!--            <div>-->
+            <!--              <span class="print-result">价格合计：</span><span class="print-result">{{ this.totalPrice }}</span><span-->
+            <!--                class="print-result">元</span>-->
+            <!--            </div>-->
             <div style="float: right;">
-              <div class="print-result">青岛韩美来工艺品有限公司</div>
+              <div class="print-result">韩美来珠宝有限公司</div>
               <div class="print-result">{{ getCurrentTime() }}</div>
             </div>
           </div>
         </div>
-        <el-table :data="tableData" :height="autoheight" @selection-change="onTableSelectChange">
+        <el-table :data="tableData" :height="autoheight" highlight-current-row @selection-change="onTableSelectChange">
           <el-table-column type="selection" width=60>
           </el-table-column>
-          <el-table-column type="expand">
+          <el-table-column type="expand" width=40>
             <template slot-scope="scope">
-              <expandRow :order="scope.row" :expandType="'inStorageByOrder'"></expandRow>
+              <div style="overflow-y: scroll;height:300px;">
+                <expandRow :order="scope.row" :expandType="'inStorageByOrder'" :selectInCode="inCodeSelect" :selectOutCode="outCodeSelect" :selectInStarttime="inStart" :selectInEndtime="inEnd" :selectOutStarttime="outStart" :selectOutEndtime="outEnd"></expandRow>
+              </div>
             </template>
           </el-table-column>
-          <el-table-column prop="customerName" label="科室名称" width=200></el-table-column>
+          <el-table-column prop="customerName" label="科室名称" width=110></el-table-column>
           <el-table-column prop="image" label="订单图片" width=100>
             <template slot-scope="scope">
-              <div style="width:50%;height:50%;">
-                <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]" lazy></el-image>
+              <div style="width:20%;height:20%;">
+                <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]" lazy>
+                  <div slot="error" class="image-slot">
+                    <i class="el-icon-picture-outline"></i>
+                  </div>
+                </el-image>
               </div>
             </template>
           </el-table-column>
           <el-table-column prop="code" label="编号" width=180></el-table-column>
           <el-table-column prop="poNum" label="订单号" width=180></el-table-column>
           <el-table-column prop="item" label="品名" width=180></el-table-column>
-          <el-table-column prop="part" label="部件" width=180></el-table-column>
-          <el-table-column prop="color" label="镀金颜色" width=180></el-table-column>
-          <el-table-column prop="bake" label="烤厅" width=180> </el-table-column>
+          <el-table-column prop="part" label="部件" width=350></el-table-column>
+          <el-table-column prop="color" label="镀金颜色" width=500></el-table-column>
+          <el-table-column prop="bake" label="烤厅" width=180></el-table-column>
           <el-table-column prop="count" label="数量" width=100></el-table-column>
           <el-table-column prop="partSumCount" label="组件总数" width=100></el-table-column>
           <el-table-column prop="partSumCountCal" label="已入库组件总数" width=140>
@@ -308,7 +384,8 @@
               <font v-else>{{ scope.row.outStroageGoodsSumCount }}</font>
             </template>
           </el-table-column>
-          <el-table-column prop="partSumCountSubOutStroageGoodsSumCount" label="剩余待出库数量" width=100></el-table-column>
+          <el-table-column prop="partSumCountSubOutStroageGoodsSumCount" label="剩余待出库数量"
+                           width=100></el-table-column>
           <el-table-column prop="overPartSumCount" label="超出出库数量" width=100></el-table-column>
           <el-table-column prop="replatCount" label="返镀数量" width=100 label-class-name="table-col-label-analy"
                            class-name="table-col-analy"></el-table-column>
@@ -318,8 +395,14 @@
                            class-name="table-col-analy" width=110></el-table-column>
           <el-table-column prop="incomingRatio" label="来料异常比率(%)" label-class-name="table-col-label-analy"
                            class-name="table-col-analy" width=130></el-table-column>
+<!--          <el-table-column prop="outStroagePrimingSumCount" label="打底数量" label-class-name="table-col-label-analy"-->
+<!--                           class-name="table-col-analy" width=110></el-table-column>-->
+<!--          <el-table-column prop="outStroagePrimingSumCountRatio" label="打底比率(%)"-->
+<!--                           label-class-name="table-col-label-analy"-->
+<!--                           class-name="table-col-analy" width=130></el-table-column>-->
           <el-table-column prop="price" label="单价" width=60></el-table-column>
           <el-table-column prop="sum" label="合计" width=80></el-table-column>
+          <el-table-column prop="deliveryTime" label="交货时间" width=100></el-table-column>
           <el-table-column prop="createTime" label="创建时间" width=160></el-table-column>
           <el-table-column label="操作" width=80>
             <template slot-scope="scope">

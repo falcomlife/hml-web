@@ -21,6 +21,8 @@ export default {
       bakeOptions: [],
       inStorageOptions: [],
       codeSelect: '',
+      itemSelect: '',
+      poNumSelect: '',
       outTypeOptions: [{
         id: "1",
         itemName: "良品"
@@ -39,6 +41,21 @@ export default {
       }, {
         id: "7",
         itemName: "返回挑面"
+      }, {
+        id: "8",
+        itemName: "检查面不良返镀"
+      }, {
+        id: "9",
+        itemName: "镀金不良返镀"
+      }, {
+        id: "10",
+        itemName: "电烤厅"
+      }, {
+        id: "11",
+        itemName: "检查完加金"
+      }, {
+        id: "12",
+        itemName: "打底"
       }, {
         id: "6",
         itemName: "其他"
@@ -218,6 +235,8 @@ export default {
           pageIndex: this.pageIndex,
           pageSize: this.pageSize,
           customerNameItem: this.customerNameSelect,
+          item: this.itemSelect,
+          poNum: this.poNumSelect,
           code: this.codeSelect,
           starttime: start,
           endtime: end
@@ -417,6 +436,7 @@ export default {
             this.formout.item = res.data.rs.item
             this.formout.part = res.data.rs.part
             this.formout.count = res.data.rs.count
+            this.formout.partSumCount = res.data.rs.partSumCount
             this.formout.name = res.data.rs.name
             this.formout.image = res.data.rs.image
             this.formout.color = res.data.rs.color
@@ -427,6 +447,7 @@ export default {
             this.formoutupdate.item = res.data.rs.item
             this.formoutupdate.part = res.data.rs.part
             this.formoutupdate.count = res.data.rs.count
+            this.formoutupdate.partSumCount = res.data.rs.partSumCount
             this.formoutupdate.name = res.data.rs.name
             this.formoutupdate.image = res.data.rs.image
             this.formoutupdate.colorId = res.data.rs.color
@@ -452,6 +473,8 @@ export default {
       }
       this.$api.outStorage.exportExcel({
         customerNameItem: this.customerNameSelect,
+        item: this.itemSelect,
+        poNum: this.poNumSelect,
         code: this.codeSelect,
         starttime: start,
         endtime: end

@@ -11,10 +11,29 @@ export default {
             customerNameOptions: [],
             colorOptions: [],
             bakeOptions: [],
+            incomingTypeOptions: [],
+            selectTimeFlagOptions: [
+                {
+                    id: "1",
+                    itemName: "订单"
+                },
+                {
+                    id: "2",
+                    itemName: "入库"
+                },
+                {
+                    id: "3",
+                    itemName: "出库"
+                }
+            ],
+            incomingTypeSelect: '',
             codeSelect: '',
+            inCodeSelect: '',
+            outCodeSelect: '',
             poSelect: '',
             itemSelect: '',
             totalPrice: 0,
+            selectTimeFlag: "1",
             partRestaurants: [],
             poNumRestaurants: [],
             itemRestaurants: [],
@@ -30,6 +49,7 @@ export default {
                 partSumCount: '',
                 price: '',
                 sum: '',
+                deliveryTime: '',
             },
             formoutupdate: {
                 customerName: '',
@@ -43,6 +63,7 @@ export default {
                 partSumCount: '',
                 price: '',
                 sum: '',
+                deliveryTime: '',
             },
             pageIndex: 1,
             pageSize: 20,
@@ -51,6 +72,17 @@ export default {
             avatarUrl: '',
             customerNameItem: '',
             time: [],
+            deliveryTime: [],
+            start: "",
+            end: "",
+            inTime: [],
+            inStart: "",
+            inEnd: "",
+            outTime: [],
+            outStart: "",
+            outEnd: "",
+            deliveryStart: "",
+            deliveryEnd: "",
             draweradd: false,
             drawerupdate: false,
             partInfo: "",
@@ -136,7 +168,6 @@ export default {
 
                     this.formoutupdate.colorId = res.data.rs.colorId
                     this.formoutupdate.partCount = res.data.rs.partCount
-                    this.formoutupdateValueChange()
                 })
             }
 
@@ -150,7 +181,6 @@ export default {
 
                     this.formoutupdate.colorId = res.data.rs.colorId
                     this.formoutupdate.partCount = res.data.rs.partCount
-                    this.formoutupdateValueChange()
                 })
             }
         },
@@ -170,23 +200,55 @@ export default {
             }).then(res => {
                 this.bakeOptions = res.data.rs
             })
+            this.$api.dict.getDict({
+                type: "incomingtype"
+            }).then(res => {
+                this.incomingTypeOptions = res.data.rs
+            })
         },
         getList() {
-            let start = ''
-            let end = ''
+            this.start = ''
+            this.end = ''
+            this.inStart = ''
+            this.inEnd = ''
+            this.outStart = ''
+            this.outEnd = ''
+            this.deliveryStart=''
+            this.deliveryEnd=''
             if (this.time != null && this.time.length == 2) {
-                start = moment(this.time[0]).format('YYYY-MM-DD HH:mm:ss')
-                end = moment(this.time[1]).format('YYYY-MM-DD HH:mm:ss')
+                this.start = moment(this.time[0]).format('YYYY-MM-DD HH:mm:ss')
+                this.end = moment(this.time[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (this.inTime != null && this.inTime.length == 2) {
+                this.inStart = moment(this.inTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                this.inEnd = moment(this.inTime[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (this.outTime != null && this.outTime.length == 2) {
+                this.outStart = moment(this.outTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                this.outEnd = moment(this.outTime[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (this.deliveryTime != null && this.deliveryTime.length == 2) {
+                this.deliveryStart = moment(this.deliveryTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                this.deliveryEnd = moment(this.deliveryTime[1]).format('YYYY-MM-DD HH:mm:ss')
             }
             this.$api.order.getList({
                 pageIndex: this.pageIndex,
                 pageSize: this.pageSize,
                 customerNameItem: this.customerNameSelect,
                 code: this.codeSelect,
+                inCode: this.inCodeSelect,
+                outCode: this.outCodeSelect,
                 po: this.poSelect,
                 item: this.itemSelect,
-                starttime: start,
-                endtime: end
+                starttime: this.start,
+                endtime: this.end,
+                inStarttime: this.inStart,
+                inEndtime: this.inEnd,
+                outStarttime: this.outStart,
+                outEndtime: this.outEnd,
+                deliveryStarttime: this.deliveryStart,
+                deliveryEndtime: this.deliveryEnd,
+                incomingType: this.incomingTypeSelect
             }).then(res => {
                 let totalPrice = 0
                 this.tableData = res.data.rs.list
@@ -224,6 +286,8 @@ export default {
         submitForm() {
             this.$refs['formout'].validate((valid) => {
                 if (valid) {
+                    let deliveryTime = moment(this.formout.deliveryTime).format('YYYY-MM-DD HH:mm:ss')
+                    this.formout.deliveryTime = deliveryTime
                     this.$api.order.save(this.formout)
                         .then(res => {
                             if (res.data.s == "0") {
@@ -260,6 +324,8 @@ export default {
         submitFormUpdate() {
             this.$refs['formoutupdate'].validate((valid) => {
                 if (valid) {
+                    let deliveryTime = moment(this.formoutupdate.deliveryTime).format('YYYY-MM-DD HH:mm:ss')
+                    this.formoutupdate.deliveryTime = deliveryTime
                     this.$api.order.update(this.formoutupdate)
                         .then(res => {
                             if (res.data.s == "0") {
@@ -398,11 +464,10 @@ export default {
         formoutValueChange() {
             this.formout.sum = this.calculate(this.formout.count * this.formout.price)
             this.formout.partSumCount = this.calculate(this.formout.count * this.formout.partCount)
-            console.log("~~~", this.formout.partSumCount)
+            console.log("~~~",this.formout.partSumCount)
 
         },
         formoutupdateValueChange() {
-            console.log("formoutupdateValueChange");
             this.formoutupdate.sum = this.calculate(this.formoutupdate.count * this.formoutupdate.price)
             this.formoutupdate.partSumCount = this.calculate(this.formoutupdate.count * this.formoutupdate.partCount)
         },
@@ -425,17 +490,43 @@ export default {
         exportExcel() {
             let start = ''
             let end = ''
+            let inStart = ''
+            let inEnd = ''
+            let outStart = ''
+            let outEnd = ''
+            let deliveryStart = ''
+            let deliveryEnd = ''
             if (this.time != null && this.time.length == 2) {
                 start = moment(this.time[0]).format('YYYY-MM-DD HH:mm:ss')
                 end = moment(this.time[1]).format('YYYY-MM-DD HH:mm:ss')
             }
+            if (this.inTime != null && this.inTime.length == 2) {
+                inStart = moment(this.inTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                inEnd = moment(this.inTime[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (this.outTime != null && this.outTime.length == 2) {
+                outStart = moment(this.outTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                outEnd = moment(this.outTime[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
+            if (this.deliveryTime != null && this.deliveryTime.length == 2) {
+                deliveryStart = moment(this.deliveryTime[0]).format('YYYY-MM-DD HH:mm:ss')
+                deliveryEnd = moment(this.deliveryTime[1]).format('YYYY-MM-DD HH:mm:ss')
+            }
             this.$api.order.exportExcel({
                 customerNameItem: this.customerNameSelect,
                 code: this.codeSelect,
+                inCode: this.inCodeSelect,
+                outCode: this.outCodeSelect,
                 po: this.poSelect,
                 item: this.itemSelect,
                 starttime: start,
-                endtime: end
+                endtime: end,
+                inStarttime: inStart,
+                inEndtime: inEnd,
+                outStarttime: outStart,
+                outEndtime: outEnd,
+                deliveryStarttime: deliveryStart,
+                deliveryEndtime: deliveryEnd
             }).then(
                 res => {
                     var blob = new Blob([res.data], {

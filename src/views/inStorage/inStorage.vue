@@ -47,6 +47,9 @@
                   <el-form-item label="总订单量" prop="count">
                     <el-input v-model="formout.count" disabled></el-input>
                   </el-form-item>
+                  <el-form-item label="订单组件数" prop="partSumCount">
+                    <el-input v-model="formout.partSumCount" disabled></el-input>
+                  </el-form-item>
                 </el-card>
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-claim drawer-hard">入库信息</i>
@@ -72,16 +75,16 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="出库编号" prop="outStorageId" v-if="formout.incomingType==5 || formout.incomingType==='30bc0ec552cb4a59a23c680362219ecf' ">
+                  <el-form-item label="出库编号" prop="outStorageId" v-show="formout.incomingType==5 || formout.incomingType==='30bc0ec552cb4a59a23c680362219ecf' ">
                     <el-select v-model="formout.outStorageId" filterable reserve-keyword placeholder="请输入订单编号" :loading="outStorageLoading" @change="outStorageCodeChange">
                       <el-option v-for="item in outStorageCodeOptions" :key="item.value" :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="不良原因" prop="badReason" v-if="formout.incomingType==='30bc0ec552cb4a59a23c680362219ecf'">
+                  <el-form-item label="不良原因" prop="badReason" v-show="formout.incomingType==='30bc0ec552cb4a59a23c680362219ecf'">
                     <el-input v-model="formout.badReason"></el-input>
                   </el-form-item>
-                  <el-form-item label="返镀原因" prop="incomingReason" v-if="formout.incomingType==5">
+                  <el-form-item label="返镀原因" prop="incomingReason" v-show="formout.incomingType==5">
                     <el-input v-model="formout.incomingReason"></el-input>
                   </el-form-item>
                   <el-form-item :required=true label="组件数" prop="bunchCount">
@@ -151,6 +154,9 @@
                   <el-form-item label="总订单量" prop="count">
                     <el-input v-model="formoutupdate.count" disabled></el-input>
                   </el-form-item>
+                  <el-form-item label="订单组件数" prop="partSumCount">
+                    <el-input v-model="formoutupdate.partSumCount" disabled></el-input>
+                  </el-form-item>
                 </el-card>
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-claim drawer-hard">入库信息</i>
@@ -176,16 +182,16 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="出库编号" prop="outStorageCode" v-if="formoutupdate.incomingTypeId==5 || formoutupdate.incomingTypeId==='30bc0ec552cb4a59a23c680362219ecf'">
+                  <el-form-item label="出库编号" prop="outStorageCode" v-show="formoutupdate.incomingTypeId==5 || formoutupdate.incomingTypeId==='30bc0ec552cb4a59a23c680362219ecf'">
                     <el-select v-model="formoutupdate.outStorageCode" filterable reserve-keyword placeholder="请输入订单编号" :loading="outStorageLoading" @change="outStorageCodeChange">
                       <el-option v-for="item in outStorageCodeOptions" :key="item.value" :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="不良原因" prop="badReason" v-if="formoutupdate.incomingTypeId==='30bc0ec552cb4a59a23c680362219ecf'">
+                  <el-form-item label="不良原因" prop="badReason" v-show="formoutupdate.incomingTypeId==='30bc0ec552cb4a59a23c680362219ecf'">
                     <el-input v-model="formoutupdate.badReason"></el-input>
                   </el-form-item>
-                  <el-form-item label="返镀原因" prop="incomingReason" v-if="formoutupdate.incomingTypeId==5">
+                  <el-form-item label="返镀原因" prop="incomingReason" v-show="formoutupdate.incomingTypeId==5">
                     <el-input v-model="formoutupdate.incomingReason"></el-input>
                   </el-form-item>
                   <el-form-item :required=true label="组件数" prop="bunchCount">
@@ -201,7 +207,7 @@
                     <el-input v-model="formoutupdate.inCount"></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" v-if="$store.state.authorities.indexOf('B-9') != -1" @click="submitFormUpdate()">提交修改</el-button>
+                    <el-button type="primary" v-show="$store.state.authorities.indexOf('B-9') != -1" @click="submitFormUpdate()">提交修改</el-button>
                   </el-form-item>
                 </el-card>
               </el-form>
@@ -241,10 +247,10 @@
         <el-tooltip class="item" effect="light" content="搜索信息" placement="bottom">
           <el-button type="primary" icon="el-icon-search" @click="getList()" size=small>搜索</el-button>
         </el-tooltip>
-        <el-tooltip v-if="$store.state.authorities.indexOf('B-6') != -1" class="item" effect="light" content="新增入库信息" placement="bottom">
+        <el-tooltip v-show="$store.state.authorities.indexOf('B-6') != -1" class="item" effect="light" content="新增入库信息" placement="bottom">
           <el-button type="primary" icon="el-icon-document-add" @click="add()" size=small>新增</el-button>
         </el-tooltip>
-        <el-tooltip v-if="$store.state.authorities.indexOf('B-3') != -1" class="item" effect="light" content="删除" placement="bottom">
+        <el-tooltip v-show="$store.state.authorities.indexOf('B-3') != -1" class="item" effect="light" content="删除" placement="bottom">
           <el-button type="warning" icon="el-icon-document-remove" @click="remove()" size=small >删除</el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="打印" placement="bottom">
@@ -263,7 +269,20 @@
         </el-option>
       </el-select>
     </el-col>
-    <el-col :span="12" style="min-height:1px;" >
+    <el-col :span="1">
+      <span class="selectlable">订单号</span>
+    </el-col>
+    <el-col :span="4">
+      <el-input size=mini style="width:80%;" v-model="poNumSelect" placeholder="请输入订单号" clearable></el-input>
+    </el-col>
+    <el-col :span="2">
+      <span class="selectlable">品名</span>
+    </el-col>
+    <el-col :span="4">
+      <el-input size=mini style="width:80%;" v-model="itemSelect" placeholder="请输入品名" clearable></el-input>
+    </el-col>
+
+    <el-col :span="1" style="min-height:1px;" >
     </el-col>
     <el-col :span="6">
       <el-button-group>
@@ -338,6 +357,7 @@
 <!--        <el-table-column prop="color" label="入库镀金颜色" width=110> </el-table-column>-->
         <el-table-column prop="bake" label="烤厅" width=110> </el-table-column>
         <el-table-column prop="count" label="总订单量" width=100> </el-table-column>
+        <el-table-column prop="partSumCount" label="订单组件数" width=120> </el-table-column>
         <el-table-column prop="bunchCount" label="组件数" width=70> </el-table-column>
         <el-table-column prop="unit" label="单位" width=50> </el-table-column>
         <el-table-column prop="inCount" label="数量说明" width=80> </el-table-column>

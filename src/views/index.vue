@@ -1,9 +1,9 @@
 <template>
 <div id="app">
-  <el-alert title="网络异常" type="error" description="网络请求未能成功发出，请检查本地电脑网络情况，检查是否使用代理。" show-icon v-if="this.alertShow" @close="alertClose">
+  <el-alert title="网络异常" type="error" description="网络请求未能成功发出，请检查本地电脑网络情况，检查是否使用代理。" show-icon v-show="this.alertShow" @close="alertClose">
   </el-alert>
   <el-container class="body" direction="vertical">
-    <el-header class="title" :style="{height: this.headerHeight1,lineHeight:this.headerHeight1}">青岛韩美来工艺品有限公司 </el-header>
+    <el-header class="title" :style="{height: this.headerHeight1,lineHeight:this.headerHeight1}">韩美来珠宝有限公司 </el-header>
     <el-header class="s-title" :style="{height: this.headerHeight2,lineHeight:this.headerHeight2}">
       <div style="float: right;width:6%;">
         <span class="s-title-span">{{this.username}}</span>
@@ -20,32 +20,32 @@
     <el-container style="margin-top: 0.3%;" direction="horizontal">
       <el-aside width=10% class="self-menu" :style="{height:this.meunHeight}">
         <el-menu class="menu" :default-active="activeIndex" router background-color="#f1f2f3" text-color="#515365" active-background-color="#fff" active-text-color="#409EFF" @select="menuSelect">
-          <el-menu-item ref="meunItemHome" v-if="this.authorities.indexOf('M-4') != -1" index="/">
+          <el-menu-item ref="meunItemHome" v-show="this.authorities.indexOf('M-4') != -1" index="/">
             <div @mouseenter="menuItemEnter($event,'meunItemHome')" @mouseleave="menuItemLeave($event,'meunItemHome')">
               <i class="el-icon-s-home"></i><span class="self-menu-item">首页</span>
             </div>
           </el-menu-item>
-          <el-menu-item ref="meunItemOrder" v-if="this.authorities.indexOf('M-1') != -1" index="/order">
+          <el-menu-item ref="meunItemOrder" v-show="this.authorities.indexOf('M-1') != -1" index="/order">
             <div @mouseenter="menuItemEnter($event,'meunItemOrder')" @mouseleave="menuItemLeave($event,'meunItemOrder')">
               <i class="el-icon-s-order"></i><span class="self-menu-item">订单管理</span>
             </div>
           </el-menu-item>
-          <el-menu-item ref="meunItemIn" v-if="this.authorities.indexOf('M-2') != -1" index="/inStorage">
+          <el-menu-item ref="meunItemIn" v-show="this.authorities.indexOf('M-2') != -1" index="/inStorage">
             <div @mouseenter="menuItemEnter($event,'meunItemIn')" @mouseleave="menuItemLeave($event,'meunItemIn')">
               <i class="el-icon-caret-bottom"></i><span class="self-menu-item">入库管理</span>
             </div>
           </el-menu-item>
-          <el-menu-item ref="meunItemOut" v-if="this.authorities.indexOf('M-3') != -1" index="/outStorage">
+          <el-menu-item ref="meunItemOut" v-show="this.authorities.indexOf('M-3') != -1" index="/outStorage">
             <div @mouseenter="menuItemEnter($event,'meunItemOut')" @mouseleave="menuItemLeave($event,'meunItemOut')">
               <i class="el-icon-caret-top"></i><span class="self-menu-item">出库管理</span>
             </div>
           </el-menu-item>
-          <el-menu-item ref="meunItemCustomer" v-if="this.authorities.indexOf('M-6') != -1" index="/company">
+          <el-menu-item ref="meunItemCustomer" v-show="this.authorities.indexOf('M-6') != -1" index="/company">
             <div @mouseenter="menuItemEnter($event,'meunItemCustomer')" @mouseleave="menuItemLeave($event,'meunItemCustomer')">
               <i class="el-icon-s-custom"></i><span class="self-menu-item">客户公司</span>
             </div>
           </el-menu-item>
-          <el-menu-item ref="meunItemDict" v-if="this.authorities.indexOf('M-5') != -1" index="/dict">
+          <el-menu-item ref="meunItemDict" v-show="this.authorities.indexOf('M-5') != -1" index="/dict">
             <div @mouseenter="menuItemEnter($event,'meunItemDict')" @mouseleave="menuItemLeave($event,'meunItemDict')">
               <i class="el-icon-s-grid"></i><span class="self-menu-item">字典管理</span>
             </div>

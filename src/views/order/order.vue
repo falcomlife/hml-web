@@ -353,9 +353,9 @@
             </template>
           </el-table-column>
           <el-table-column prop="customerName" label="科室名称" width=110></el-table-column>
-          <el-table-column prop="image" label="订单图片" width=100>
+          <el-table-column prop="image" label="图片" width=50>
             <template slot-scope="scope">
-              <div style="width:20%;height:20%;">
+              <div style="width:80%;height:80%;">
                 <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]" lazy>
                   <div slot="error" class="image-slot">
                     <i class="el-icon-picture-outline"></i>
@@ -367,41 +367,41 @@
           <el-table-column prop="code" label="编号" width=180></el-table-column>
           <el-table-column prop="poNum" label="订单号" width=180></el-table-column>
           <el-table-column prop="item" label="品名" width=180></el-table-column>
-          <el-table-column prop="part" label="部件" width=350></el-table-column>
-          <el-table-column prop="color" label="镀金颜色" width=500></el-table-column>
-          <el-table-column prop="bake" label="烤厅" width=180></el-table-column>
-          <el-table-column prop="count" label="数量" width=100></el-table-column>
-          <el-table-column prop="partSumCount" label="组件总数" width=100></el-table-column>
-          <el-table-column prop="partSumCountCal" label="已入库组件总数" width=140>
+          <el-table-column prop="part" label="部件" width=320></el-table-column>
+          <el-table-column prop="color" label="镀金颜色" width=480></el-table-column>
+          <el-table-column prop="bake" label="烤厅" width=100></el-table-column>
+          <el-table-column prop="count" label="数量" width=60></el-table-column>
+          <el-table-column prop="partSumCount" label="组件总数" width=60></el-table-column>
+          <el-table-column prop="partSumCountCal" label="已入库组件总数" width=80>
             <template slot-scope="scope">
               <font v-if="scope.row.incomingBigger" color="red">{{ scope.row.partSumCountCal }}</font>
               <font v-else>{{ scope.row.partSumCountCal }}</font>
             </template>
           </el-table-column>
-          <el-table-column prop="outStroageGoodsSumCount" label="已出库良品组件总数" width=160>
+          <el-table-column prop="outStroageGoodsSumCount" label="已出库良品组件总数" width=100>
             <template slot-scope="scope">
               <font v-if="scope.row.outStorageBigger" color="red">{{ scope.row.outStroageGoodsSumCount }}</font>
               <font v-else>{{ scope.row.outStroageGoodsSumCount }}</font>
             </template>
           </el-table-column>
           <el-table-column prop="partSumCountSubOutStroageGoodsSumCount" label="剩余待出库数量"
-                           width=100></el-table-column>
-          <el-table-column prop="overPartSumCount" label="超出出库数量" width=100></el-table-column>
-          <el-table-column prop="replatCount" label="返镀数量" width=100 label-class-name="table-col-label-analy"
+                           width=80></el-table-column>
+          <el-table-column prop="overPartSumCount" label="超出出库数量" width=80></el-table-column>
+          <el-table-column prop="replatCount" label="返镀数量" width=60 label-class-name="table-col-label-analy"
                            class-name="table-col-analy"></el-table-column>
           <el-table-column prop="replatRatio" label="返镀比率(%)" label-class-name="table-col-label-analy"
-                           class-name="table-col-analy" width=100></el-table-column>
+                           class-name="table-col-analy" width=80></el-table-column>
           <el-table-column prop="incomingCount" label="来料异常数量" label-class-name="table-col-label-analy"
-                           class-name="table-col-analy" width=110></el-table-column>
+                           class-name="table-col-analy" width=80></el-table-column>
           <el-table-column prop="incomingRatio" label="来料异常比率(%)" label-class-name="table-col-label-analy"
-                           class-name="table-col-analy" width=130></el-table-column>
+                           class-name="table-col-analy" width=80></el-table-column>
 <!--          <el-table-column prop="outStroagePrimingSumCount" label="打底数量" label-class-name="table-col-label-analy"-->
 <!--                           class-name="table-col-analy" width=110></el-table-column>-->
 <!--          <el-table-column prop="outStroagePrimingSumCountRatio" label="打底比率(%)"-->
 <!--                           label-class-name="table-col-label-analy"-->
 <!--                           class-name="table-col-analy" width=130></el-table-column>-->
           <el-table-column prop="price" label="单价" width=60></el-table-column>
-          <el-table-column prop="sum" label="合计" width=80></el-table-column>
+          <el-table-column prop="sum" label="合计" width=60></el-table-column>
           <el-table-column prop="deliveryTime" label="交货时间" width=100></el-table-column>
           <el-table-column prop="createTime" label="创建时间" width=160></el-table-column>
           <el-table-column label="操作" width=80>

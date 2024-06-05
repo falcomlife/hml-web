@@ -10,10 +10,10 @@
           </template>
         </el-table-column>
         <el-table-column label="编号" prop="code"></el-table-column>
-        <el-table-column label="入库科室名称" prop="customerName"></el-table-column>
+<!--        <el-table-column label="入库科室名称" prop="customerName"></el-table-column>-->
         <el-table-column label="图片" prop="image">
           <template slot-scope="scope">
-            <div style="width:15%;height:15%;">
+            <div style="width:4%;height:4%;">
               <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
@@ -22,17 +22,17 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="订单号" prop="poNum"></el-table-column>
-        <el-table-column label="品名" prop="item" ></el-table-column>
-        <el-table-column label="部件" prop="part"  width="300"></el-table-column>
-        <el-table-column label="订单镀金颜色" prop="orderColor" width="500"></el-table-column>
-        <el-table-column label="烤厅" prop="bake"> </el-table-column>
+<!--        <el-table-column label="订单号" prop="poNum"></el-table-column>-->
+<!--        <el-table-column label="品名" prop="item" ></el-table-column>-->
+<!--        <el-table-column label="部件" prop="part"  width="300"></el-table-column>-->
+<!--        <el-table-column label="订单镀金颜色" prop="orderColor" width="500"></el-table-column>-->
+<!--        <el-table-column label="烤厅" prop="bake"> </el-table-column>-->
         <el-table-column label="来料类别" prop="incomingType"></el-table-column>
-<!--        <el-table-column label="不良原因" prop="badReason"></el-table-column>-->
-        <el-table-column label="返镀原因" prop="incomingReason"></el-table-column>
-        <el-table-column label="总订单量" prop="count"> </el-table-column>
+<!--&lt;!&ndash;        <el-table-column label="不良原因" prop="badReason"></el-table-column>&ndash;&gt;-->
+<!--        <el-table-column label="返镀原因" prop="incomingReason"></el-table-column>-->
+<!--        <el-table-column label="总订单量" prop="count"> </el-table-column>-->
         <el-table-column label="组件数" prop="bunchCount"></el-table-column>
-        <el-table-column label="数量说明" prop="inCount"></el-table-column>
+<!--        <el-table-column label="数量说明" prop="inCount"></el-table-column>-->
 <!--        <el-table-column label="单位" prop="unit"></el-table-column>-->
         <el-table-column label="创建时间" prop="createTime"></el-table-column>
       </el-table>
@@ -40,10 +40,10 @@
       <el-table :data="tableOutStoragesData" style="width: 100%;" v-if="expandType=='outStoragesByInStorage'"
                 row-class-name="expandtablebodyOut" highlight-current-row header-row-class-name="expandtableheaderOut">
         <el-table-column label="编号" prop="code"></el-table-column>
-        <el-table-column label="科室名称" prop="customerName"></el-table-column>
+<!--        <el-table-column label="科室名称" prop="customerName"></el-table-column>-->
         <el-table-column label="图片" prop="image">
           <template slot-scope="scope">
-            <div style="width:15%;height:15%;">
+            <div style="width:4%;height:4%;">
               <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
@@ -52,26 +52,26 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="品名" prop="item"></el-table-column>
-        <el-table-column label="订单号" prop="poNum"></el-table-column>
-        <el-table-column label="部件" prop="part" width="400"></el-table-column>
-        <el-table-column label="镀金颜色" prop="color" width="600"></el-table-column>
-        <el-table-column label="考厅" prop="bake"></el-table-column>
-        <el-table-column label="总订单量" prop="count"></el-table-column>
-        <el-table-column label="入库数量" prop="inCount"></el-table-column>
+<!--        <el-table-column label="品名" prop="item"></el-table-column>-->
+<!--        <el-table-column label="订单号" prop="poNum"></el-table-column>-->
+<!--        <el-table-column label="部件" prop="part" width="400"></el-table-column>-->
+<!--        <el-table-column label="镀金颜色" prop="color" width="600"></el-table-column>-->
+<!--        <el-table-column label="考厅" prop="bake"></el-table-column>-->
+<!--        <el-table-column label="总订单量" prop="count"></el-table-column>-->
+<!--        <el-table-column label="入库数量" prop="inCount"></el-table-column>-->
         <el-table-column label="出库类型" prop="outType"></el-table-column>
         <el-table-column label="出库组件数" prop="bunchCount"></el-table-column>
-        <el-table-column label="出库数量说明" prop="outCount"></el-table-column>
+<!--        <el-table-column label="出库数量说明" prop="outCount"></el-table-column>-->
         <el-table-column label="创建时间" prop="createTime"></el-table-column>
       </el-table>
 
       <el-table :data="tableOutStorageData" style="width: 100%;" v-else-if="expandType=='outStorageByInStorage'"
                 row-class-name="expandtablebodyOut" highlight-current-row header-row-class-name="expandtableheaderOut">
         <el-table-column label="编号" prop="code"></el-table-column>
-        <el-table-column label="科室名称" prop="customerName"></el-table-column>
+<!--        <el-table-column label="科室名称" prop="customerName"></el-table-column>-->
         <el-table-column label="图片" prop="image">
           <template slot-scope="scope">
-            <div style="width:15%;height:15%;">
+            <div style="width:4%;height:4%;">
               <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
@@ -80,16 +80,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="品名" prop="item"></el-table-column>
-        <el-table-column label="订单号" prop="poNum"></el-table-column>
-        <el-table-column label="部件" prop="part" width="400"></el-table-column>
-        <el-table-column label="镀金颜色" prop="color" width="600"></el-table-column>
-        <el-table-column label="考厅" prop="bake"></el-table-column>
-        <el-table-column label="总订单量" prop="count"></el-table-column>
-        <el-table-column label="入库数量" prop="inCount"></el-table-column>
+<!--        <el-table-column label="品名" prop="item"></el-table-column>-->
+<!--        <el-table-column label="订单号" prop="poNum"></el-table-column>-->
+<!--        <el-table-column label="部件" prop="part" width="400"></el-table-column>-->
+<!--        <el-table-column label="镀金颜色" prop="color" width="600"></el-table-column>-->
+<!--        <el-table-column label="考厅" prop="bake"></el-table-column>-->
+<!--        <el-table-column label="总订单量" prop="count"></el-table-column>-->
+<!--        <el-table-column label="入库数量" prop="inCount"></el-table-column>-->
         <el-table-column label="出库类型" prop="outType"></el-table-column>
         <el-table-column label="出库组件数" prop="bunchCount"></el-table-column>
-        <el-table-column label="出库数量说明" prop="outCount"></el-table-column>
+<!--        <el-table-column label="出库数量说明" prop="outCount"></el-table-column>-->
         <el-table-column label="创建时间" prop="createTime"></el-table-column>
       </el-table>
     </el-col>
@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'expandRow',

@@ -462,14 +462,14 @@ export default {
             return isLt2M;
         },
         formoutValueChange() {
-            this.formout.sum = this.calculate(this.formout.count * this.formout.price)
             this.formout.partSumCount = this.calculate(this.formout.count * this.formout.partCount)
+            this.formout.sum = this.calculate(this.formout.partSumCount * this.formout.price)
             console.log("~~~",this.formout.partSumCount)
 
         },
         formoutupdateValueChange() {
-            this.formoutupdate.sum = this.calculate(this.formoutupdate.count * this.formoutupdate.price)
             this.formoutupdate.partSumCount = this.calculate(this.formoutupdate.count * this.formoutupdate.partCount)
+            this.formoutupdate.sum = this.calculate(this.formoutupdate.partSumCount * this.formoutupdate.price)
         },
         calculate(value) {
             const precision = 14

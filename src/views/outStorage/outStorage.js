@@ -30,9 +30,9 @@ export default {
         id: "2",
         itemName: "不良"
       }, {
-        id: "3",
-        itemName: "来料异常"
-      }, {
+      //   id: "3",
+      //   itemName: "来料异常"
+      // }, {
         id: "4",
         itemName: "白金出库"
       }, {

@@ -68,7 +68,7 @@
                     <el-input type=number v-model="formout.partCount" @change="formoutValueChange"></el-input>
                   </el-form-item>
                   <el-form-item label="组件总数量" prop="partSumCount">
-                    <el-input type=number v-model="formout.partSumCount"></el-input>
+                    <el-input type=number v-model="formout.partSumCount" @change="formoutValueChange"></el-input>
                   </el-form-item>
                   <el-form-item label="交货时间" prop="deliveryTime">
                     <el-date-picker
@@ -152,7 +152,7 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="数量" prop="count">
-                    <el-input type=number v-model="formoutupdate.count"></el-input>
+                    <el-input type=number v-model="formoutupdate.count" @change="formoutupdateValueChange"></el-input>
                   </el-form-item>
                   <el-form-item label="每套组件数量" prop="partCount">
                     <el-input type=number v-model="formoutupdate.partCount" @change="formoutupdateValueChange"></el-input>
@@ -391,10 +391,10 @@
                            class-name="table-col-analy"></el-table-column>
           <el-table-column prop="replatRatio" label="返镀比率(%)" label-class-name="table-col-label-analy"
                            class-name="table-col-analy" width=80></el-table-column>
-          <el-table-column prop="incomingCount" label="来料异常数量" label-class-name="table-col-label-analy"
-                           class-name="table-col-analy" width=80></el-table-column>
-          <el-table-column prop="incomingRatio" label="来料异常比率(%)" label-class-name="table-col-label-analy"
-                           class-name="table-col-analy" width=80></el-table-column>
+<!--          <el-table-column prop="incomingCount" label="来料异常数量" label-class-name="table-col-label-analy"-->
+<!--                           class-name="table-col-analy" width=80></el-table-column>-->
+<!--          <el-table-column prop="incomingRatio" label="来料异常比率(%)" label-class-name="table-col-label-analy"-->
+<!--                           class-name="table-col-analy" width=80></el-table-column>-->
 <!--          <el-table-column prop="outStroagePrimingSumCount" label="打底数量" label-class-name="table-col-label-analy"-->
 <!--                           class-name="table-col-analy" width=110></el-table-column>-->
 <!--          <el-table-column prop="outStroagePrimingSumCountRatio" label="打底比率(%)"-->

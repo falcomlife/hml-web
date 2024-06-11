@@ -52,6 +52,17 @@
             </div>
           </template>
         </el-table-column>
+        <el-table-column label="出库图片" prop="otimage">
+          <template slot-scope="scope">
+            <div style="width:4%;height:4%;">
+              <el-image :src="scope.row.otimage" fit=contain :preview-src-list="[scope.row.otimage]">
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline"></i>
+                </div>
+              </el-image>
+            </div>
+          </template>
+        </el-table-column>
 <!--        <el-table-column label="品名" prop="item"></el-table-column>-->
 <!--        <el-table-column label="订单号" prop="poNum"></el-table-column>-->
 <!--        <el-table-column label="部件" prop="part" width="400"></el-table-column>-->
@@ -73,6 +84,17 @@
           <template slot-scope="scope">
             <div style="width:4%;height:4%;">
               <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]">
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline"></i>
+                </div>
+              </el-image>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="出库图片" prop="otimage">
+          <template slot-scope="scope">
+            <div style="width:4%;height:4%;">
+              <el-image :src="scope.row.otimage" fit=contain :preview-src-list="[scope.row.otimage]">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
                 </div>

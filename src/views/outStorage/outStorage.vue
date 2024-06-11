@@ -60,6 +60,13 @@
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-order drawer-hard">出库信息</i>
                   <el-divider> </el-divider>
+                  <el-form-item label="出库图片" prop="otimage">
+                    <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false"
+                               :on-success="handleAddSuccess" :before-upload="beforeAddUpload">
+                      <img v-if="formout.otimage" :src="formout.otimage" class="avatar"/>
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
                   <el-form-item :required=true label="组件数" prop="bunchCount">
                     <el-input type=number v-model="formout.bunchCount"></el-input>
                   </el-form-item>
@@ -140,6 +147,13 @@
                 <el-card style="margin-top:3%;">
                   <i class="el-icon-s-order drawer-hard">出库信息</i>
                   <el-divider> </el-divider>
+                  <el-form-item label="出库图片" prop="otimage">
+                    <el-upload class="avatar-uploader" :action="avatarUrl" :show-file-list="false"
+                               :on-success="handleUpdateSuccess" :before-upload="beforeUpdateUpload">
+                      <img v-if="formoutupdate.otimage" :src="formoutupdate.otimage" class="avatar"/>
+                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                  </el-form-item>
                   <el-form-item :required=true label="组件数" prop="bunchCount">
                     <el-input type=number v-model="formoutupdate.bunchCount"></el-input>
                   </el-form-item>
@@ -253,6 +267,17 @@
           <template slot-scope="scope">
             <div style="width:50%;height:50%;">
               <el-image :src="scope.row.image" fit=contain :preview-src-list="[scope.row.image]" lazy></el-image>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="otimage" label="出库图片" width=100>
+          <template slot-scope="scope">
+            <div style="width:50%;height:50%;">
+              <el-image :src="scope.row.otimage" fit=contain :preview-src-list="[scope.row.otimage]" lazy>
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline"></i>
+                </div>
+              </el-image>
             </div>
           </template>
         </el-table-column>

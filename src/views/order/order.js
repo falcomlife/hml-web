@@ -12,6 +12,7 @@ export default {
             colorOptions: [],
             bakeOptions: [],
             incomingTypeOptions: [],
+            inExport: false,
             selectTimeFlagOptions: [
                 {
                     id: "1",
@@ -512,6 +513,16 @@ export default {
                 deliveryStart = moment(this.deliveryTime[0]).format('YYYY-MM-DD HH:mm:ss')
                 deliveryEnd = moment(this.deliveryTime[1]).format('YYYY-MM-DD HH:mm:ss')
             }
+            if(this.inExport){
+              this.$message({
+                  title: '正在导出',
+                  message: '已经提交了一个导出任务，请待任务结束后重试。',
+                  type: 'warning',
+                  duration: 1000
+              })
+              return
+            }
+            this.inExport = true
             this.$api.order.exportExcel({
                 customerNameItem: this.customerNameSelect,
                 code: this.codeSelect,
@@ -546,6 +557,9 @@ export default {
                         type: 'success',
                         duration: 1000
                     })
+                    this.inExport = false
+                }).finally(() => {
+                  this.inExport = false
                 })
         },
         partQuerySearch(queryString, cb) {

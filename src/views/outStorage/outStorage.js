@@ -23,6 +23,7 @@ export default {
             codeSelect: '',
             itemSelect: '',
             poNumSelect: '',
+            inExport: false,
             outTypeOptions: [{
                 id: "1",
                 itemName: "良品"
@@ -471,6 +472,16 @@ export default {
                 start = moment(this.time[0]).format('YYYY-MM-DD HH:mm:ss')
                 end = moment(this.time[1]).format('YYYY-MM-DD HH:mm:ss')
             }
+            if(this.inExport){
+              this.$message({
+                  title: '正在导出',
+                  message: '已经提交了一个导出任务，请待任务结束后重试。',
+                  type: 'warning',
+                  duration: 1000
+              })
+              return
+            }
+            this.inExport = true
             this.$api.outStorage.exportExcel({
                 customerNameItem: this.customerNameSelect,
                 item: this.itemSelect,
@@ -497,6 +508,9 @@ export default {
                         type: 'success',
                         duration: 1000
                     })
+                    this.inExport = false
+                }).finally(() => {
+                  this.inExport = false
                 })
         },
     }
